@@ -1,4 +1,5 @@
 import './style.css';
+import data from '../src/data/data.json';
 
 class Project {
   constructor(name) {
@@ -35,18 +36,3 @@ class Task {
     console.log(`${this.title} ${this.desc} ${this.dueDate} ${this.priority}`);
   }
 }
-
-const project1 = new Project('morning routine');
-const project2 = new Project('afternoon routine');
-
-const task1 = new Task('shower', 'first desc', 'today', 'high');
-const task2 = new Task('code', 'second desc', 'tomorrow', 'medium');
-const task3 = new Task('eat', 'third desc', 'later', 'low');
-
-project1.addTask(task1);
-project1.addTask(task2);
-
-project2.addTask(task3);
-
-project1.displayAllTasks();
-project2.displayAllTasks();

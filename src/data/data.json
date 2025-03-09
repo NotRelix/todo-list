@@ -1,0 +1,36 @@
+{
+  "Daily Routine": [
+    {
+      "title": "shower",
+      "desc": "first description on first task",
+      "dueDate": "2025-03-09",
+      "priority": "high"
+    },
+    {
+      "title": "make todo list",
+      "desc": "second description on first task",
+      "dueDate": "2025-03-10",
+      "priority": "medium"
+    }
+  ],
+  "Assignments": [
+    {
+      "title": "data analytics",
+      "desc": "first description on second task",
+      "dueDate": "2025-03-10",
+      "priority": "high"
+    },
+    {
+      "title": "thesis",
+      "desc": "second description on second task",
+      "dueDate": "2025-03-11",
+      "priority": "medium"
+    },
+    {
+      "title": "study for automata test",
+      "desc": "third description on second task",
+      "dueDate": "2025-03-09",
+      "priority": "low"
+    }
+  ]
+}
