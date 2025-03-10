@@ -7,14 +7,16 @@
         "title": "shower",
         "desc": "first description on first task",
         "dueDate": "2025-03-09",
-        "priority": "high"
+        "priority": "high",
+        "done": "true"
       },
       {
         "task_id": "2",
         "title": "make todo list",
         "desc": "second description on first task",
         "dueDate": "2025-03-10",
-        "priority": "medium"
+        "priority": "medium",
+        "done": "false"
       }
     ]
   },
@@ -26,21 +28,24 @@
         "title": "data analytics",
         "desc": "first description on second task",
         "dueDate": "2025-03-10",
-        "priority": "high"
+        "priority": "high",
+        "done": "true"
       },
       {
         "task_id": "2",
         "title": "thesis",
         "desc": "second description on second task",
         "dueDate": "2025-03-11",
-        "priority": "medium"
+        "priority": "medium",
+        "done": "false"
       },
       {
         "task_id": "3",
         "title": "study for automata test",
         "desc": "third description on second task",
         "dueDate": "2025-03-09",
-        "priority": "low"
+        "priority": "low",
+        "done": "true"
       }
     ]
   }

@@ -7,7 +7,7 @@ function populateProjects(projects, projectName) {
 }
 
 function populateTasks(projects, task, projectId) {
-  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority);
+  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority, task.done);
   const projectIndex = projectId - 1;
   projects[projectIndex].addTask(newTask);
 }
