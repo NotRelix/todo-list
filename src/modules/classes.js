@@ -12,6 +12,10 @@ class Project {
     this.#tasks.push(task);
   }
 
+  deleteTask(index) {
+    this.#tasks.splice(index, 1);
+  }
+
   displayAllTasks() {
     this.#tasks.forEach(task => {
       console.log(task);
