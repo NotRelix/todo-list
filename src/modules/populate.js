@@ -12,7 +12,8 @@ function populateTasks(projects, task, projectId) {
   projects[projectIndex].addTask(newTask);
 }
 
-function populateInitialData(projects) {
+function populateFromJson() {
+  const projects = [];
   for (let projectName in data) {
     const projectId = data[projectName].project_id;
     populateProjects(projects, projectName);
@@ -20,8 +21,25 @@ function populateInitialData(projects) {
       populateTasks(projects, task, projectId);
     }
   }
+  return projects;
+}
+
+function populateStorage(projects) {
+  const todoData = [];
+  for (let projectName in projects) {
+    const newProject = {
+      name: projects[projectName].name,
+      tasks: [],
+    };
+    todoData.push(newProject);
+    for (let task of projects[projectName].tasks) {
+      newProject.tasks.push(task);
+    }
+  }
+  localStorage.setItem('todoData', JSON.stringify(todoData));
 }
 
 export {
-  populateInitialData,
+  populateFromJson,
+  populateStorage,
 }
