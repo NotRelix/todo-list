@@ -7,4 +7,5 @@ import { formatDateShort, formatDateLong } from './modules/formatDate.js';
 const projects = populateFromJson();
 populateStorage(projects);
 
+console.log(projects);
 console.log(JSON.parse(localStorage.getItem('todoData')));

@@ -5,8 +5,8 @@ function addProject(projects, name) {
   projects.push(newProject);
 }
 
-function addTask(project, title, desc, dueDate, priority, done = "false") {
-  const newTask = new Task(title, desc, dueDate, priority, done);
+function addTask(project, task) {
+  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority, task.done);
   project.addTask(newTask);
 }
 

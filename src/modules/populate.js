@@ -1,26 +1,17 @@
 import data from '../data/data.json';
-import { Project, Task } from './classes.js';
-
-function populateProjects(projects, projectName) {
-  const newProject = new Project(projectName);
-  projects.push(newProject);
-}
-
-function populateTasks(projects, task, projectId) {
-  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority, task.done);
-  const projectIndex = projectId - 1;
-  projects[projectIndex].addTask(newTask);
-}
+import { addProject, addTask } from './create.js';
 
 function populateFromJson() {
   const projects = [];
-  for (let projectName in data) {
-    const projectId = data[projectName].project_id;
-    populateProjects(projects, projectName);
-    for (let task of data[projectName].tasks) {
-      populateTasks(projects, task, projectId);
+  const newData = Object.entries(data);
+  newData.forEach((project, index) => {
+    const projectName = project[0];
+    const projectTasks = project[1].tasks;
+    addProject(projects, projectName);
+    for (let task of projectTasks) {
+      addTask(projects[index], task);
     }
-  }
+  });
   return projects;
 }
 
