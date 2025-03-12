@@ -1,5 +1,10 @@
 :root {
   --navbar: #E9ECEF;
+  --sidebar: #F8F9FA;
+  --sidebar-selected: #349CB9;
+  --primary-text: #000000;
+  --secondary-text: #797979;
+  --secondary-icon: #B7B7B7;
 }
 
 * {
@@ -7,6 +12,22 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid var(--secondary-icon);
+}
+
+.container {
+  height: 100%;
 }
 
 /* Navbar */
@@ -17,6 +38,37 @@ nav {
   gap: 24px;
 }
 
-.main-menu {
+/* SVG Icons */
+.main-menu,
+.side-bar-icon {
   width: 24px;
+}
+
+/* Side Bar */
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar);
+  gap: 8px;
+  padding: 16px;
+  width: 256px;
+  height: 100%;
+}
+
+.side-bar-btn {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  gap: 8px;
+  padding: 12px;
+}
+
+.side-bar-select {
+  background-color: var(--sidebar-selected);
+  color: white;
+}
+
+.side-bar-btn h3 {
+  font-size: 16px;
+  font-weight: 400;
 }
