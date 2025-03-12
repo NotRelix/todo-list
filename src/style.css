@@ -1,5 +1,22 @@
+:root {
+  --navbar: #E9ECEF;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  background-color: var(--navbar);
+  padding: 16px 24px;
+  gap: 24px;
+}
+
+.main-menu {
+  width: 24px;
 }
