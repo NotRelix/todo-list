@@ -1,8 +1,7 @@
 import data from '../data/data.json';
 import { addProject, addTask } from './create.js';
 
-function populateFromJson() {
-  const projects = [];
+function populateFromJson(projects) {
   const newData = Object.entries(data);
   newData.forEach((project, index) => {
     const projectName = project[0];
@@ -12,7 +11,16 @@ function populateFromJson() {
       addTask(projects[index], task);
     }
   });
-  return projects;
+}
+
+function populateFromStorage(projects) {
+  const newData = JSON.parse(localStorage.getItem('todoData'));
+  newData.forEach((project, index) => {
+    addProject(projects, project.name);
+    for (let task of project.tasks) {
+      addTask(projects[index], task);
+    }
+  });
 }
 
 function populateStorage(projects) {
@@ -32,5 +40,6 @@ function populateStorage(projects) {
 
 export {
   populateFromJson,
+  populateFromStorage,
   populateStorage,
 }
