@@ -18,6 +18,6 @@ if (localStorage.getItem('todoData') === null) {
   populateFromStorage(projects);
 }
 
-screenController();
+screenController(projects);
 
 console.log(projects);
