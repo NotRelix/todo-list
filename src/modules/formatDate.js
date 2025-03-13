@@ -1,7 +1,11 @@
 import { format } from "date-fns";
 
-function formatDateShort(date) {
+function formatDateVeryShort(date) {
   return format(date, "MMM dd");
+}
+
+function formatDateShort(date) {
+  return format(date, "MMMM dd");
 }
 
 function formatDateLong(date) {
@@ -9,6 +13,7 @@ function formatDateLong(date) {
 }
 
 export {
+  formatDateVeryShort,
   formatDateShort,
   formatDateLong,
 }

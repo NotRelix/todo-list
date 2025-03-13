@@ -1,3 +1,4 @@
+import { formatDateLong, formatDateShort } from "./formatDate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
 
 // Sidebar
@@ -84,7 +85,7 @@ function createTaskInfoRight(task) {
   taskInfoRight.classList.add('task-info-right');
 
   const dueDate = document.createElement('p');
-  dueDate.textContent = task.dueDate;
+  dueDate.textContent = formatDateShort(task.dueDate);
   taskInfoRight.appendChild(dueDate);
 
   const favoriteIcon = createFavoriteIcon();
@@ -135,6 +136,34 @@ function loadAllTasks(projects, taskList) {
   loadTaskList(sortedTasks, taskList)
 }
 
+function loadToday(projects, taskList) {
+  const tasks = [];
+  projects.forEach(project => {
+    project.tasks.forEach(task => {
+      if (formatDateLong(task.dueDate) === formatDateLong(new Date())) {
+        tasks.push(task);
+      }
+    })
+  })
+  loadTaskList(tasks, taskList);
+}
+
+function loadThisWeek(projects, taskList) {
+  const tasks = [];
+  const nextWeek = new Date();
+  nextWeek.setDate(nextWeek.getDate() + 7);
+  projects.forEach(project => {
+    project.tasks.forEach(task => {
+      console.log(new Date(task.dueDate))
+      if (new Date() <= new Date(task.dueDate) && new Date(task.dueDate) <= nextWeek) {
+        tasks.push(task);
+      }
+    })
+  })
+  sortTasks(tasks);
+  loadTaskList(tasks, taskList);
+}
+
 function loadMainContent(projects, index) {
   const taskList = document.querySelector('.task-list');
   const taskTitle = document.querySelector('.task-title');
@@ -145,10 +174,15 @@ function loadMainContent(projects, index) {
     loadAllTasks(projects, taskList);
   } else if (index == 1) {
     // Today
+    taskTitle.textContent = 'Today';
+    loadToday(projects, taskList);
   } else if (index == 2) {
     // This Week
+    taskTitle.textContent = 'This Week';
+    loadThisWeek(projects, taskList);
   } else if (index == 3) {
     // Important
+    taskTitle.textContent = 'Important';
   } else {
     // User Created Projects
     index -= 4;
