@@ -9,6 +9,7 @@ const projects = [];
 
 // localStorage.removeItem('todoData');
 
+// Use my data template or use their modified todo list
 if (localStorage.getItem('todoData') === null) {
   console.log('from json');
   populateFromJson(projects);
