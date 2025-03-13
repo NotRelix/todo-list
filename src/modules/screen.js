@@ -52,6 +52,10 @@ function clearTaskList() {
   taskList.innerHTML = '';
 }
 
+function sortTasks(tasks) {
+  tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+}
+
 function createTaskInfoLeft(task) {
   const taskInfoLeft = document.createElement('div');
   taskInfoLeft.classList.add('task-info-left');
@@ -94,7 +98,6 @@ function createTaskInfoRight(task) {
 
 function loadTaskList(tasks, taskList) {
   tasks.forEach(task => {
-    console.log(task);
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
     taskList.appendChild(taskCard);
@@ -121,10 +124,25 @@ function createAddTaskBtn() {
   return btn;
 }
 
+function loadAllTasks(projects, taskList) {
+  const sortedTasks = [];
+  projects.forEach(project => {
+    project.tasks.forEach(task => {
+      sortedTasks.push(task);
+    })
+  })
+  sortTasks(sortedTasks);
+  loadTaskList(sortedTasks, taskList)
+}
+
 function loadMainContent(projects, index) {
+  const taskList = document.querySelector('.task-list');
+  const taskTitle = document.querySelector('.task-title');
   clearTaskList();
   if (index == 0) {
     // All Tasks
+    taskTitle.textContent = 'All Tasks';
+    loadAllTasks(projects, taskList);
   } else if (index == 1) {
     // Today
   } else if (index == 2) {
@@ -134,8 +152,6 @@ function loadMainContent(projects, index) {
   } else {
     // User Created Projects
     index -= 4;
-    const taskList = document.querySelector('.task-list');
-    const taskTitle = document.querySelector('.task-title');
     taskTitle.textContent = projects[index].name;
     loadTaskList(projects[index].tasks, taskList);
     const addTaskBtn = createAddTaskBtn();
@@ -145,6 +161,7 @@ function loadMainContent(projects, index) {
 
 function screenController(projects) {
   loadSidebarContent(projects);
+  loadMainContent(projects, 0);
 
   const sideBarBtns = document.querySelectorAll('.side-bar-btn');
   sideBarBtns.forEach((btn, index) => {
