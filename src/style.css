@@ -27,7 +27,40 @@ hr {
 }
 
 .container {
+  display: flex;
   height: 100%;
+}
+
+/* Common Styles */
+.main-menu,
+.side-bar-icon,
+.tick-box,
+.favorite-icon,
+.menu-icon {
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.side-bar,
+.main-content-container {
+  padding: 16px;
+}
+
+.side-bar-select,
+.task-title {
+  color: white;
+}
+
+.side-bar-btn,
+.task-title,
+.task-card {
+  border-radius: 4px;
+}
+
+.side-bar,
+.side-bar-btn {
+  display: flex;
+  gap: 8px;
 }
 
 /* Navbar */
@@ -38,37 +71,112 @@ nav {
   gap: 24px;
 }
 
-/* SVG Icons */
-.main-menu,
-.side-bar-icon {
-  width: 24px;
-}
-
 /* Side Bar */
 .side-bar {
-  display: flex;
   flex-direction: column;
   background-color: var(--sidebar);
-  gap: 8px;
-  padding: 16px;
   width: 256px;
   height: 100%;
 }
 
 .side-bar-btn {
-  display: flex;
   align-items: center;
-  border-radius: 4px;
-  gap: 8px;
   padding: 12px;
 }
 
 .side-bar-select {
   background-color: var(--sidebar-selected);
-  color: white;
 }
 
 .side-bar-btn h3 {
   font-size: 16px;
   font-weight: 400;
+}
+
+/* Main Content */
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 64rem;
+  gap: 16px;
+}
+
+.task-title {
+  padding: 24px;
+  font-size: 44px;
+  background-color: var(--sidebar-selected);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 16px;
+}
+
+/* Task Card */
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--sidebar);
+  padding: 8px 12px;
+}
+
+.task-info-left {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-info-left h3 {
+  font-size: 16px;
+}
+
+.task-info-left p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.task-info-left p,
+.task-info-right {
+  color: var(--secondary-text);
+  font-size: 14px;
+}
+
+.separator,
+.tick-box {
+  color: var(--secondary-icon);
+}
+
+.separator {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.task-info-right {
+  flex-shrink: 0;
+  display: flex;
+  gap: 12px;
+}
+
+.task-info-right p {
+  width: 9rem;
+  border: 1px solid var(--secondary-text);
+  padding: 2px;
+  border-radius: 8px;
+  text-align: center;
 }
