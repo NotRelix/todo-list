@@ -3,6 +3,7 @@ import { populateFromJson, populateFromStorage, populateStorage } from './module
 import { addProject, addTask } from './modules/create.js';
 import { deleteProject, deleteTask } from './modules/delete.js';
 import { formatDateShort, formatDateLong } from './modules/formatDate.js';
+import { screenController } from './modules/screen.js';
 
 const projects = [];
 
@@ -16,5 +17,7 @@ if (localStorage.getItem('todoData') === null) {
   console.log('from storage');
   populateFromStorage(projects);
 }
+
+screenController();
 
 console.log(projects);

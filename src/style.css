@@ -1,4 +1,5 @@
 :root {
+  --primary-background: rgb(255, 255, 255);
   --navbar: #E9ECEF;
   --sidebar: #F8F9FA;
   --sidebar-selected: #349CB9;
@@ -86,7 +87,8 @@ nav {
   padding: 12px;
 }
 
-.side-bar-btn:hover {
+.side-bar-btn:hover,
+.add-project:hover {
   background-color: #E9ECEF;
 }
 
@@ -98,7 +100,8 @@ nav {
   background-color: var(--sidebar-selected-hover);
 }
 
-.side-bar-btn h3 {
+.side-bar-btn h3,
+.add-project h3 {
   font-size: 16px;
   font-weight: 400;
 }
@@ -110,7 +113,11 @@ nav {
 }
 
 .add-project {
+  display: flex;
+  padding: 12px;
+  align-items: center;
   background-color: var(--sidebar);
+  gap: 8px;
 }
 
 /* Main Content */
@@ -213,7 +220,7 @@ nav {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background-color: white;
+  background-color: var(--primary-background);
   border: none;
 }
 
