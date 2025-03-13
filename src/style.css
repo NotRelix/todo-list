@@ -4,10 +4,12 @@
   --sidebar: #F8F9FA;
   --sidebar-selected: #349CB9;
   --sidebar-selected-hover: #3195b1;
-  --primary-text: #000000;
+  --primary-text: #434343;
   --secondary-text: #797979;
   --secondary-icon: #B7B7B7;
   --task-hover: #f1f2f3;
+  --favorite: #ffd166;
+  --favorite-hover: #eec159;
 }
 
 * {
@@ -213,6 +215,18 @@ nav {
   padding: 2px;
   border-radius: 8px;
   text-align: center;
+}
+
+.favorite {
+  fill: var(--favorite);
+}
+
+.favorite-icon:hover {
+  fill: var(--favorite);
+}
+
+.favorite:hover {
+  fill: var(--favorite-hover);
 }
 
 .add-task {

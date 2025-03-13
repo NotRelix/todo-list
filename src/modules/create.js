@@ -6,7 +6,7 @@ function addProject(projects, name) {
 }
 
 function addTask(project, task) {
-  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority, task.done);
+  const newTask = new Task(task.title, task.desc, task.dueDate, task.priority, task.done, task.important);
   project.addTask(newTask);
 }
 

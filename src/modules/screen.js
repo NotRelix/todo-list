@@ -89,6 +89,9 @@ function createTaskInfoRight(task) {
   taskInfoRight.appendChild(dueDate);
 
   const favoriteIcon = createFavoriteIcon();
+  if (task.important === "true") {
+    favoriteIcon.classList.add('favorite');
+  }
   taskInfoRight.appendChild(favoriteIcon);
 
   const menuIcon = createMenuIcon();
@@ -98,9 +101,10 @@ function createTaskInfoRight(task) {
 }
 
 function loadTaskList(tasks, taskList) {
-  tasks.forEach(task => {
+  tasks.forEach((task, index) => {
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
+    taskCard.setAttribute('data-index', index)
     taskList.appendChild(taskCard);
 
     const leftSection = createTaskInfoLeft(task);
@@ -126,14 +130,14 @@ function createAddTaskBtn() {
 }
 
 function loadAllTasks(projects, taskList) {
-  const sortedTasks = [];
+  const tasks = [];
   projects.forEach(project => {
     project.tasks.forEach(task => {
-      sortedTasks.push(task);
+      tasks.push(task);
     })
   })
-  sortTasks(sortedTasks);
-  loadTaskList(sortedTasks, taskList)
+  sortTasks(tasks);
+  loadTaskList(tasks, taskList)
 }
 
 function loadToday(projects, taskList) {
@@ -145,6 +149,7 @@ function loadToday(projects, taskList) {
       }
     })
   })
+  sortTasks(tasks);
   loadTaskList(tasks, taskList);
 }
 
@@ -154,8 +159,20 @@ function loadThisWeek(projects, taskList) {
   nextWeek.setDate(nextWeek.getDate() + 7);
   projects.forEach(project => {
     project.tasks.forEach(task => {
-      console.log(new Date(task.dueDate))
       if (new Date() <= new Date(task.dueDate) && new Date(task.dueDate) <= nextWeek) {
+        tasks.push(task);
+      }
+    })
+  })
+  sortTasks(tasks);
+  loadTaskList(tasks, taskList);
+}
+
+function loadImportant(projects, taskList) {
+  const tasks = [];
+  projects.forEach(project => {
+    project.tasks.forEach(task => {
+      if (task.important === "true") {
         tasks.push(task);
       }
     })
@@ -183,6 +200,7 @@ function loadMainContent(projects, index) {
   } else if (index == 3) {
     // Important
     taskTitle.textContent = 'Important';
+    loadImportant(projects, taskList);
   } else {
     // User Created Projects
     index -= 4;
@@ -191,6 +209,13 @@ function loadMainContent(projects, index) {
     const addTaskBtn = createAddTaskBtn();
     taskList.appendChild(addTaskBtn);
   }
+}
+
+// Modals
+function handleCreateProject() {
+  // TODO: Create New Projects
+  // const addProjectModal = document.querySelector('.add-project-modal');
+  // addProjectModal.showModal();
 }
 
 function screenController(projects) {
@@ -204,6 +229,18 @@ function screenController(projects) {
       e.currentTarget.classList.add('side-bar-select');
       loadMainContent(projects, index);
     })
+  })
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.add-project')) {
+      handleCreateProject();
+    }
+
+    const favoriteIcon = e.target.closest('.favorite-icon')
+    if (favoriteIcon) {
+      const index = favoriteIcon.closest('[data-index]').getAttribute('data-index');
+      console.log(index);
+    }
   })
 }
 
