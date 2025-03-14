@@ -1,10 +1,12 @@
 import { formatDateLong, formatDateShort } from "./formatDate.js";
+import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
 
 // Sidebar
-function createSidebarDiv(name) {
+function createSidebarDiv(name, index) {
   const newDiv = document.createElement('div');
   newDiv.classList.add('side-bar-btn');
+  newDiv.setAttribute('data-sidebar', index);
 
   const svg = createHamburgerIcon();
   newDiv.appendChild(svg);
@@ -33,8 +35,8 @@ function createAddProjectBtn() {
 
 function loadSidebarContent(projects) {
   const sidebar = document.querySelector('.side-bar');
-  projects.forEach(project => {
-    const newList = createSidebarDiv(project.name);
+  projects.forEach((project, index) => {
+    const newList = createSidebarDiv(project.name, index + 4);  // User defined projects starts at 4
     sidebar.appendChild(newList)
   })
   const addProjectBtn = createAddProjectBtn();
@@ -101,10 +103,11 @@ function createTaskInfoRight(task) {
 }
 
 function loadTaskList(tasks, taskList) {
-  tasks.forEach((task, index) => {
+  tasks.forEach(task => {
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
-    taskCard.setAttribute('data-index', index)
+    taskCard.setAttribute('data-project-id', task.project_id)
+    taskCard.setAttribute('data-task-id', task.task_id);
     taskList.appendChild(taskCard);
 
     const leftSection = createTaskInfoLeft(task);
@@ -187,6 +190,7 @@ function loadMainContent(projects, index) {
   clearTaskList();
   if (index == 0) {
     // All Tasks
+    console.log('test');
     taskTitle.textContent = 'All Tasks';
     loadAllTasks(projects, taskList);
   } else if (index == 1) {
@@ -209,6 +213,28 @@ function loadMainContent(projects, index) {
     const addTaskBtn = createAddTaskBtn();
     taskList.appendChild(addTaskBtn);
   }
+}
+
+function handleFavoritePress(projects, projectId, taskId) {
+  const projectIndex = projectId - 1;
+  const taskIndex = taskId - 1;
+  if (projects[projectIndex].tasks[taskIndex].important === "true") {
+    projects[projectIndex].tasks[taskIndex].setImportant("false");
+  } else {
+    projects[projectIndex].tasks[taskIndex].setImportant("true");
+  }
+  populateStorage(projects);
+}
+
+function getSideBarIndex() {
+  const sideBarBtn = document.querySelectorAll('.side-bar-btn');
+  let index = -1;
+  sideBarBtn.forEach((btn, i) => {
+    if (btn.classList.contains('side-bar-select')) {
+      index = i;
+    }
+  })
+  return index;
 }
 
 // Modals
@@ -238,8 +264,12 @@ function screenController(projects) {
 
     const favoriteIcon = e.target.closest('.favorite-icon')
     if (favoriteIcon) {
-      const index = favoriteIcon.closest('[data-index]').getAttribute('data-index');
-      console.log(index);
+      const sideBarIndex = getSideBarIndex();
+      const projectId = +favoriteIcon.closest('[data-project-id]').getAttribute('data-project-id');
+      const taskId = +favoriteIcon.closest('[data-task-id]').getAttribute('data-task-id');
+      console.log(projectId);
+      handleFavoritePress(projects, projectId, taskId);
+      loadMainContent(projects, sideBarIndex);
     }
   })
 }
