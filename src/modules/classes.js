@@ -24,7 +24,9 @@ class Project {
 }
 
 class Task {
-  constructor(title, desc, dueDate, priority, done, important) {
+  constructor(project_id, task_id, title, desc, dueDate, priority, done, important) {
+    this.project_id = project_id;
+    this.task_id = task_id;
     this.title = title;
     this.desc = desc;
     this.dueDate = dueDate;
