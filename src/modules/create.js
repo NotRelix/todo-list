@@ -6,7 +6,16 @@ function addProject(projects, name) {
 }
 
 function addTask(project, task) {
-  const newTask = new Task(task.project_id, task.task_id, task.title, task.desc, task.dueDate, task.priority, task.done, task.important);
+  const newTask = new Task(
+    task.project_id,
+    task.task_id,
+    task.title,
+    task.desc,
+    task.dueDate,
+    task.priority,
+    task.done,
+    task.important
+  );
   project.addTask(newTask);
 }
 

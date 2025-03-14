@@ -188,25 +188,19 @@ function loadMainContent(projects, index) {
   const taskList = document.querySelector('.task-list');
   const taskTitle = document.querySelector('.task-title');
   clearTaskList();
-  if (index == 0) {
-    // All Tasks
-    console.log('test');
+  if (index == 0) {         // All Tasks
     taskTitle.textContent = 'All Tasks';
     loadAllTasks(projects, taskList);
-  } else if (index == 1) {
-    // Today
+  } else if (index == 1) {  // Today
     taskTitle.textContent = 'Today';
     loadToday(projects, taskList);
-  } else if (index == 2) {
-    // This Week
+  } else if (index == 2) {  // This Week
     taskTitle.textContent = 'This Week';
     loadThisWeek(projects, taskList);
-  } else if (index == 3) {
-    // Important
+  } else if (index == 3) {  // Important
     taskTitle.textContent = 'Important';
     loadImportant(projects, taskList);
-  } else {
-    // User Created Projects
+  } else {                  // User Created Projects
     index -= 4;
     taskTitle.textContent = projects[index].name;
     loadTaskList(projects[index].tasks, taskList);
@@ -240,14 +234,23 @@ function getSideBarIndex() {
 // Modals
 function handleCreateProject() {
   // TODO: Create New Projects
-  // const addProjectModal = document.querySelector('.add-project-modal');
-  // addProjectModal.showModal();
+  const addProjectModal = document.querySelector('.add-project-modal');
+  addProjectModal.showModal();
+  addProjectModal.classList.add('add-project-modal-open');
+}
+
+function closeCreateProject() {
+  const addProjectModal = document.querySelector('.add-project-modal');
+  setTimeout(() => {
+    addProjectModal.close();
+  }, 200)
+  addProjectModal.classList.remove('add-project-modal-open');
 }
 
 function screenController(projects) {
   loadSidebarContent(projects);
   loadMainContent(projects, 0);
-
+  
   const sideBarBtns = document.querySelectorAll('.side-bar-btn');
   sideBarBtns.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
@@ -256,10 +259,21 @@ function screenController(projects) {
       loadMainContent(projects, index);
     })
   })
+  
+  const addProjectForm = document.querySelector('.add-project-form');
+  addProjectForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    closeCreateProject();
+    e.target.reset();
+  })
 
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
+    }
+    
+    if (e.target.closest('.close-icon')) {
+      closeCreateProject();
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon')
@@ -267,7 +281,6 @@ function screenController(projects) {
       const sideBarIndex = getSideBarIndex();
       const projectId = +favoriteIcon.closest('[data-project-id]').getAttribute('data-project-id');
       const taskId = +favoriteIcon.closest('[data-task-id]').getAttribute('data-task-id');
-      console.log(projectId);
       handleFavoritePress(projects, projectId, taskId);
       loadMainContent(projects, sideBarIndex);
     }

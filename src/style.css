@@ -11,6 +11,8 @@
   --task-icon-hover: #e0e1e2;
   --favorite: #ffd166;
   --favorite-hover: #eec159;
+  --form-input: #F3F3F3;
+  --form-input-placeholder: #D1D1D1;
 }
 
 * {
@@ -99,7 +101,8 @@ nav {
   background-color: var(--sidebar-selected);
 }
 
-.side-bar-select:hover {
+.side-bar-select:hover,
+form button:hover {
   background-color: var(--sidebar-selected-hover);
 }
 
@@ -246,4 +249,76 @@ nav {
 
 .add-icon {
   width: 20px;
+}
+
+/* Modal */
+.add-project-modal {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  margin: auto;
+  padding: 16px;
+  gap: 24px;
+  width: 24rem;
+  background-color: var(--sidebar);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out;
+}
+
+.add-project-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.add-project-modal-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.add-project-modal-open::backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-icon {
+  border-radius: 100%;
+  padding: 4px;
+  width: 32px;
+}
+
+.close-icon:hover {
+  background-color: var(--form-input);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form input {
+  padding: 8px;
+  background-color: var(--form-input);
+  border: none;
+}
+
+form input::placeholder {
+  color: var(--form-input-placeholder);
+}
+
+form input:focus {
+  outline: none;
+}
+
+form button {
+  padding: 8px;
+  border: none;
+  background-color: var(--sidebar-selected);
+  color: white;
 }
