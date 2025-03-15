@@ -1,3 +1,4 @@
+import { addProject } from "./create.js";
 import { formatDateLong, formatDateShort } from "./formatDate.js";
 import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
@@ -33,6 +34,7 @@ function createAddProjectBtn() {
   return btn;
 }
 
+// TODO: separate user projects and default sidebar options
 function loadSidebarContent(projects) {
   const sidebar = document.querySelector('.side-bar');
   projects.forEach((project, index) => {
@@ -238,6 +240,15 @@ function handleCreateProject() {
   addProjectModal.classList.add('add-project-modal-open');
 }
 
+function handleProjectFormSubmit(projects) {
+  const titleInput = document.querySelector('[name="project-name"]');
+  addProject(projects, titleInput.value);
+
+  // TODO: Reload sidebar
+  // loadSidebarContent(projects);
+  console.log(projects);
+}
+
 function closeCreateProject() {
   const addProjectModal = document.querySelector('.add-project-modal');
   setTimeout(() => {
@@ -262,6 +273,7 @@ function screenController(projects) {
   const addProjectForm = document.querySelector('.add-project-form');
   addProjectForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    handleProjectFormSubmit(projects);
     closeCreateProject();
     e.target.reset();
   })
