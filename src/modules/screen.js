@@ -34,12 +34,11 @@ function createAddProjectBtn() {
   return btn;
 }
 
-// TODO: separate user projects and default sidebar options
 function loadSidebarContent(projects) {
   const createdProjects = document.querySelector('.created-projects');
   createdProjects.innerHTML = '';
   projects.forEach((project, index) => {
-    const newList = createSidebarDiv(project.name, index + 4);  // User defined projects starts at 4
+    const newList = createSidebarDiv(project.name, index);
     createdProjects.appendChild(newList)
   })
   const addProjectBtn = createAddProjectBtn();
@@ -187,10 +186,10 @@ function loadImportant(projects, taskList) {
   loadTaskList(tasks, taskList);
 }
 
-function loadMainContent(projects, index) {
+function loadMainContentDefault(projects, index) {
+  clearTaskList();
   const taskList = document.querySelector('.task-list');
   const taskTitle = document.querySelector('.task-title');
-  clearTaskList();
   if (index == 0) {         // All Tasks
     taskTitle.textContent = 'All Tasks';
     loadAllTasks(projects, taskList);
@@ -203,10 +202,19 @@ function loadMainContent(projects, index) {
   } else if (index == 3) {  // Important
     taskTitle.textContent = 'Important';
     loadImportant(projects, taskList);
-  } else {                  // User Created Projects
-    index -= 4;
+  }
+}
+
+function loadMainContentCreated(projects, index) {
+  const projectCount = document.querySelector('.created-projects').children.length - 1;
+  if (projectCount < index) {
+    clearTaskList();
+    const taskList = document.querySelector('.task-list');
+    const taskTitle = document.querySelector('.task-title');
     taskTitle.textContent = projects[index].name;
+
     loadTaskList(projects[index].tasks, taskList);
+
     const addTaskBtn = createAddTaskBtn();
     taskList.appendChild(addTaskBtn);
   }
@@ -221,17 +229,6 @@ function handleFavoritePress(projects, projectId, taskId) {
     projects[projectIndex].tasks[taskIndex].setImportant("true");
   }
   populateStorage(projects);
-}
-
-function getSideBarIndex() {
-  const sideBarBtn = document.querySelectorAll('.side-bar-btn');
-  let index = -1;
-  sideBarBtn.forEach((btn, i) => {
-    if (btn.classList.contains('side-bar-select')) {
-      index = i;
-    }
-  })
-  return index;
 }
 
 // Modals
@@ -258,27 +255,30 @@ function closeCreateProject() {
 
 function screenController(projects) {
   loadSidebarContent(projects);
-  loadMainContent(projects, 0);
-  
+  loadMainContentDefault(projects, 0);
+
   const sideBarBtn = document.querySelectorAll('.side-bar-btn');
   const taskBarOptions = Array.from(document.querySelector('.task-bar-options').children);
   taskBarOptions.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
       removeSelectStyle(sideBarBtn, 'side-bar-select');
       e.currentTarget.classList.add('side-bar-select');
-      loadMainContent(projects, index);
+      loadMainContentDefault(projects, index);
     })
   })
 
   const createdProjects = Array.from(document.querySelector('.created-projects').children);
   createdProjects.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
-      removeSelectStyle(sideBarBtn, 'side-bar-select');
-      e.currentTarget.classList.add('side-bar-select');
-      loadMainContent(projects, index + 4);   // Refactor this to not use +4
+      const projectCount = createdProjects.length - 1;
+      if (projectCount < index) {
+        removeSelectStyle(sideBarBtn, 'side-bar-select');
+        e.currentTarget.classList.add('side-bar-select');
+        loadMainContentCreated(projects, index);
+      }
     })
   })
-  
+
   const addProjectForm = document.querySelector('.add-project-form');
   addProjectForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -286,7 +286,7 @@ function screenController(projects) {
     closeCreateProject();
     e.target.reset();
   })
-  
+
   const addProjectModal = document.querySelector('.add-project-modal');
   addProjectModal.addEventListener('cancel', (e) => {
     e.preventDefault();
@@ -297,18 +297,24 @@ function screenController(projects) {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
     }
-    
+
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon')
     if (favoriteIcon) {
-      const sideBarIndex = getSideBarIndex();
       const projectId = +favoriteIcon.closest('[data-project-id]').getAttribute('data-project-id');
       const taskId = +favoriteIcon.closest('[data-task-id]').getAttribute('data-task-id');
+      const parentClass = document.querySelector('.side-bar-select').parentElement.classList.value;
+      const sideBarIndex = document.querySelector('.side-bar-select').getAttribute('data-sidebar');
       handleFavoritePress(projects, projectId, taskId);
-      loadMainContent(projects, sideBarIndex);
+
+      if (parentClass === 'task-bar-options') {
+        loadMainContentDefault(projects, sideBarIndex);
+      } else {
+        loadMainContentCreated(projects, sideBarIndex);
+      }
     }
   })
 }
