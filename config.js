@@ -1,5 +1,5 @@
 const supportedLocales = ["en-US", "de", "pl", "it"];
 
-export {
+module.exports = {
   supportedLocales,
 }
