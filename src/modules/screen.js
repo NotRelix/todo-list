@@ -260,12 +260,22 @@ function screenController(projects) {
   loadSidebarContent(projects);
   loadMainContent(projects, 0);
   
+  const sideBarBtn = document.querySelectorAll('.side-bar-btn');
   const taskBarOptions = Array.from(document.querySelector('.task-bar-options').children);
   taskBarOptions.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
-      removeSelectStyle(taskBarOptions, 'side-bar-select');
+      removeSelectStyle(sideBarBtn, 'side-bar-select');
       e.currentTarget.classList.add('side-bar-select');
       loadMainContent(projects, index);
+    })
+  })
+
+  const createdProjects = Array.from(document.querySelector('.created-projects').children);
+  createdProjects.forEach((btn, index) => {
+    btn.addEventListener('click', (e) => {
+      removeSelectStyle(sideBarBtn, 'side-bar-select');
+      e.currentTarget.classList.add('side-bar-select');
+      loadMainContent(projects, index + 4);   // Refactor this to not use +4
     })
   })
   
