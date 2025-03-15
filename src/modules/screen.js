@@ -51,6 +51,10 @@ function removeSelectStyle(nodeList, className) {
   })
 }
 
+function getCreatedProjects() {
+  return Array.from(document.querySelector('.created-projects').children);
+}
+
 // Main Content
 function clearTaskList() {
   const taskList = document.querySelector('.task-list');
@@ -206,18 +210,15 @@ function loadMainContentDefault(projects, index) {
 }
 
 function loadMainContentCreated(projects, index) {
-  const projectCount = document.querySelector('.created-projects').children.length - 1;
-  if (projectCount < index) {
-    clearTaskList();
-    const taskList = document.querySelector('.task-list');
-    const taskTitle = document.querySelector('.task-title');
-    taskTitle.textContent = projects[index].name;
+  clearTaskList();
+  const taskList = document.querySelector('.task-list');
+  const taskTitle = document.querySelector('.task-title');
+  taskTitle.textContent = projects[index].name;
 
-    loadTaskList(projects[index].tasks, taskList);
+  loadTaskList(projects[index].tasks, taskList);
 
-    const addTaskBtn = createAddTaskBtn();
-    taskList.appendChild(addTaskBtn);
-  }
+  const addTaskBtn = createAddTaskBtn();
+  taskList.appendChild(addTaskBtn);
 }
 
 function handleFavoritePress(projects, projectId, taskId) {
@@ -242,7 +243,6 @@ function handleProjectFormSubmit(projects) {
   const titleInput = document.querySelector('[name="project-name"]');
   addProject(projects, titleInput.value);
   loadSidebarContent(projects);
-  console.log(projects);
 }
 
 function closeCreateProject() {
@@ -253,10 +253,8 @@ function closeCreateProject() {
   addProjectModal.classList.remove('add-project-modal-open');
 }
 
-function screenController(projects) {
-  loadSidebarContent(projects);
-  loadMainContentDefault(projects, 0);
-
+// Utils
+function defaultOptionsListener(projects) {
   const sideBarBtn = document.querySelectorAll('.side-bar-btn');
   const taskBarOptions = Array.from(document.querySelector('.task-bar-options').children);
   taskBarOptions.forEach((btn, index) => {
@@ -266,24 +264,55 @@ function screenController(projects) {
       loadMainContentDefault(projects, index);
     })
   })
+}
 
-  const createdProjects = Array.from(document.querySelector('.created-projects').children);
+function createdProjectsListener(projects) {
+  const createdProjects = getCreatedProjects();
+  const sideBarBtn = document.querySelectorAll('.side-bar-btn');
   createdProjects.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
       const projectCount = createdProjects.length - 1;
-      if (projectCount < index) {
+      if (index < projectCount) {
         removeSelectStyle(sideBarBtn, 'side-bar-select');
         e.currentTarget.classList.add('side-bar-select');
         loadMainContentCreated(projects, index);
       }
     })
   })
+}
+
+function getNewProjectAdded() {
+  const createdProjects = document.querySelector('.created-projects').children;
+  return createdProjects[createdProjects.length - 2];
+}
+
+function screenController(projects) {
+  loadSidebarContent(projects);
+  loadMainContentDefault(projects, 0);
+
+  defaultOptionsListener(projects);
+  createdProjectsListener(projects);
 
   const addProjectForm = document.querySelector('.add-project-form');
   addProjectForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    
     handleProjectFormSubmit(projects);
     closeCreateProject();
+    populateStorage(projects);
+    
+    defaultOptionsListener(projects);
+    createdProjectsListener(projects);
+    
+    const lastIndex = projects.length - 1;
+    const newProjectAdded = getNewProjectAdded();
+    
+    const sideBarBtn = document.querySelectorAll('.side-bar-btn');
+    removeSelectStyle(sideBarBtn, 'side-bar-select');
+    newProjectAdded.classList.add('side-bar-select');
+    
+    loadMainContentCreated(projects, lastIndex);
+    
     e.target.reset();
   })
 

@@ -5,7 +5,7 @@ import { screenController } from './modules/screen.js';
 const projects = [];
 
 // Test: to fetch from json
-// localStorage.clear();
+localStorage.clear();
 
 // Use my data template or use their modified todo list
 if (localStorage.getItem('todoData') === null) {
