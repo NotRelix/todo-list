@@ -34,6 +34,10 @@ hr {
   border-top: 1px solid var(--secondary-icon);
 }
 
+button:focus {
+  outline: none;
+}
+
 .container {
   display: flex;
   height: 100%;
@@ -57,6 +61,14 @@ hr {
 .side-bar-select,
 .task-title {
   color: white;
+}
+
+.logo,
+.main-menu,
+.side-bar-btn,
+.task-card,
+.add-btn {
+  cursor: pointer;
 }
 
 .side-bar-btn,
@@ -88,13 +100,14 @@ nav {
 }
 
 .side-bar-btn {
+  position: relative;
   align-items: center;
   padding: 12px;
 }
 
 .side-bar-btn:hover,
 .add-project:hover {
-  background-color: #E9ECEF;
+  background-color: var(--navbar);
 }
 
 .side-bar-select {
@@ -117,6 +130,26 @@ form button:hover {
 .add-project h3 {
   font-size: 16px;
   font-weight: 400;
+}
+
+.side-bar-menu-btn {
+  position: absolute;
+  margin-right: 8px;
+  right: 0;
+}
+
+.side-bar-menu-btn,
+.menu-icon {
+  border-radius: 100%;
+}
+
+.side-bar-menu-btn:hover,
+.menu-icon:hover {
+  background-color: var(--task-icon-hover)
+}
+
+.side-bar-select .side-bar-menu-btn:hover {
+  background-color: var(--sidebar-selected);
 }
 
 .add-btn {
@@ -209,6 +242,10 @@ form button:hover {
   color: var(--secondary-icon);
 }
 
+.tick-box:hover {
+  fill: var(--task-icon-hover);
+}
+
 .separator {
   font-size: 18px;
   flex-shrink: 0;
@@ -256,6 +293,13 @@ form button:hover {
 
 .add-icon {
   width: 20px;
+}
+
+.no-tasks {
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 400;
+  color: var(--primary-text);
 }
 
 /* Modal */

@@ -37,19 +37,25 @@ function createAddIcon() {
 
 function createTickBoxIcon() {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("class", "tick-box size-6");
+  svg.classList.add("tick-box", "size-6");
   svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  svg.setAttribute("fill", "none");
   svg.setAttribute("viewBox", "0 0 24 24");
   svg.setAttribute("stroke-width", "1.5");
   svg.setAttribute("stroke", "currentColor");
+  svg.setAttribute("fill", "none");
 
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("stroke-linecap", "round");
-  path.setAttribute("stroke-linejoin", "round");
-  path.setAttribute("d", "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z");
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  circle.setAttribute("cx", "12");
+  circle.setAttribute("cy", "12");
+  circle.setAttribute("r", "9");
+  circle.setAttribute("stroke", "currentColor");
 
-  svg.appendChild(path);
+  const checkmark = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  checkmark.setAttribute("stroke-linecap", "round");
+  checkmark.setAttribute("stroke-linejoin", "round");
+  checkmark.setAttribute("d", "M9 12.75 11.25 15 15 9.75");
+
+  svg.append(circle, checkmark);
 
   return svg;
 }

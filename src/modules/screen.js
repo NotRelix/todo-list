@@ -16,6 +16,10 @@ function createSidebarDiv(name, index) {
   title.textContent = name;
   newDiv.appendChild(title);
 
+  const svg2 = createMenuIcon();
+  svg2.classList.add('side-bar-menu-btn')
+  newDiv.appendChild(svg2);
+
   return newDiv;
 }
 
@@ -138,6 +142,14 @@ function createAddTaskBtn() {
   return btn;
 }
 
+function displayNoTasks() {
+  const taskList = document.querySelector('.task-list');
+  const text = document.createElement('p');
+  text.classList.add('no-tasks');
+  text.textContent = 'No Tasks!';
+  taskList.appendChild(text);
+}
+
 function loadAllTasks(projects, taskList) {
   const tasks = [];
   projects.forEach(project => {
@@ -158,6 +170,10 @@ function loadToday(projects, taskList) {
       }
     })
   })
+
+  if (tasks.length === 0) {
+    displayNoTasks();
+  }
   sortTasks(tasks);
   loadTaskList(tasks, taskList);
 }
@@ -296,23 +312,23 @@ function screenController(projects) {
   const addProjectForm = document.querySelector('.add-project-form');
   addProjectForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     handleProjectFormSubmit(projects);
     closeCreateProject();
     populateStorage(projects);
-    
+
     defaultOptionsListener(projects);
     createdProjectsListener(projects);
-    
+
     const lastIndex = projects.length - 1;
     const newProjectAdded = getNewProjectAdded();
-    
+
     const sideBarBtn = document.querySelectorAll('.side-bar-btn');
     removeSelectStyle(sideBarBtn, 'side-bar-select');
     newProjectAdded.classList.add('side-bar-select');
-    
+
     loadMainContentCreated(projects, lastIndex);
-    
+
     e.target.reset();
   })
 
