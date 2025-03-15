@@ -36,13 +36,14 @@ function createAddProjectBtn() {
 
 // TODO: separate user projects and default sidebar options
 function loadSidebarContent(projects) {
-  const sidebar = document.querySelector('.side-bar');
+  const createdProjects = document.querySelector('.created-projects');
+  createdProjects.innerHTML = '';
   projects.forEach((project, index) => {
     const newList = createSidebarDiv(project.name, index + 4);  // User defined projects starts at 4
-    sidebar.appendChild(newList)
+    createdProjects.appendChild(newList)
   })
   const addProjectBtn = createAddProjectBtn();
-  sidebar.appendChild(addProjectBtn);
+  createdProjects.appendChild(addProjectBtn);
 }
 
 function removeSelectStyle(nodeList, className) {
@@ -243,9 +244,7 @@ function handleCreateProject() {
 function handleProjectFormSubmit(projects) {
   const titleInput = document.querySelector('[name="project-name"]');
   addProject(projects, titleInput.value);
-
-  // TODO: Reload sidebar
-  // loadSidebarContent(projects);
+  loadSidebarContent(projects);
   console.log(projects);
 }
 
@@ -261,10 +260,10 @@ function screenController(projects) {
   loadSidebarContent(projects);
   loadMainContent(projects, 0);
   
-  const sideBarBtns = document.querySelectorAll('.side-bar-btn');
-  sideBarBtns.forEach((btn, index) => {
+  const taskBarOptions = Array.from(document.querySelector('.task-bar-options').children);
+  taskBarOptions.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
-      removeSelectStyle(sideBarBtns, 'side-bar-select');
+      removeSelectStyle(taskBarOptions, 'side-bar-select');
       e.currentTarget.classList.add('side-bar-select');
       loadMainContent(projects, index);
     })
