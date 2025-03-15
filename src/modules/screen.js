@@ -233,7 +233,6 @@ function getSideBarIndex() {
 
 // Modals
 function handleCreateProject() {
-  // TODO: Create New Projects
   const addProjectModal = document.querySelector('.add-project-modal');
   addProjectModal.showModal();
   addProjectModal.classList.add('add-project-modal-open');
@@ -265,6 +264,12 @@ function screenController(projects) {
     e.preventDefault();
     closeCreateProject();
     e.target.reset();
+  })
+  
+  const addProjectModal = document.querySelector('.add-project-modal');
+  addProjectModal.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeCreateProject();
   })
 
   document.addEventListener('click', (e) => {
