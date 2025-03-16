@@ -289,7 +289,6 @@ function handleTaskFormSubmit(projects) {
   const priority = document.querySelector('[name="task-priority"]');
   const dueDate = document.querySelector('[name="task-due"]');
   const projectIndex = getProjectIndex();
-  const taskList = document.querySelector('.task-list');
   const newTask = {
     project_id: +projectIndex + 1 + "",
     task_id: projects[projectIndex].tasks.length + 1 + "",
@@ -301,8 +300,7 @@ function handleTaskFormSubmit(projects) {
     important: "false"
   }
   addTask(projects[projectIndex], newTask);
-  console.log(projects[projectIndex].tasks)
-  // loadTaskList(projects[projectIndex].tasks, taskList);
+  loadMainContentCreated(projects, projectIndex);
 }
 
 function closeCreateTask() {
@@ -398,6 +396,8 @@ function screenController(projects) {
     e.preventDefault();
 
     handleTaskFormSubmit(projects);
+    closeCreateTask();
+    populateStorage(projects);
   })
 
   const addTaskModal = document.querySelector('.add-task-modal');

@@ -378,7 +378,8 @@ form input::placeholder {
   color: var(--form-input-placeholder);
 }
 
-form input:focus {
+input:focus,
+select {
   outline: none;
 }
 
