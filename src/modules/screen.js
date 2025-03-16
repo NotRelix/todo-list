@@ -1,4 +1,4 @@
-import { addProject } from "./create.js";
+import { addProject, addTask } from "./create.js";
 import { formatDateLong, formatDateShort } from "./formatDate.js";
 import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
@@ -150,6 +150,12 @@ function displayNoTasks() {
   taskList.appendChild(text);
 }
 
+function getProjectIndex() {
+  const selectedProject = document.querySelector('.side-bar-select');
+  const projectIndex = selectedProject.getAttribute('data-sidebar');
+  return projectIndex;
+}
+
 function loadAllTasks(projects, taskList) {
   const tasks = [];
   projects.forEach(project => {
@@ -277,13 +283,37 @@ function handleCreateTask() {
   addTaskModal.classList.add('add-task-modal-open');
 }
 
+function handleTaskFormSubmit(projects) {
+  const title = document.querySelector('[name="task-title"]');
+  const desc = document.querySelector('[name="task-desc"]');
+  const priority = document.querySelector('[name="task-priority"]');
+  const dueDate = document.querySelector('[name="task-due"]');
+  const projectIndex = getProjectIndex();
+  const taskList = document.querySelector('.task-list');
+  const newTask = {
+    project_id: +projectIndex + 1 + "",
+    task_id: projects[projectIndex].tasks.length + 1 + "",
+    title: title.value,
+    desc: desc.value,
+    dueDate: new Date(dueDate.value) + "",
+    priority: priority.value,
+    done: "false",
+    important: "false"
+  }
+  addTask(projects[projectIndex], newTask);
+  console.log(projects[projectIndex].tasks)
+  // loadTaskList(projects[projectIndex].tasks, taskList);
+}
+
 function closeCreateTask() {
   const addTaskModal = document.querySelector('.add-task-modal');
   const addTaskForm = document.querySelector('.add-task-form');
+  const taskDue = document.querySelector('#task-due');
   setTimeout(() => {
     addTaskModal.close();
     addTaskForm.reset();
   }, 200)
+  taskDue.classList.add('task-due-empty');
   addTaskModal.classList.remove('add-task-modal-open');
 }
 
@@ -313,6 +343,15 @@ function createdProjectsListener(projects) {
       }
     })
   })
+}
+
+function updateDateInput() {
+  const taskDue = document.querySelector('#task-due');
+  if (taskDue.value) {
+    taskDue.classList.remove('task-due-empty')
+  } else {
+    taskDue.classList.add('task-due-empty');
+  }
 }
 
 function getNewProjectAdded() {
@@ -354,6 +393,13 @@ function screenController(projects) {
     closeCreateProject();
   })
 
+  const addTaskForm = document.querySelector('.add-task-form');
+  addTaskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    handleTaskFormSubmit(projects);
+  })
+
   const addTaskModal = document.querySelector('.add-task-modal');
   addTaskModal.addEventListener('cancel', (e) => {
     e.preventDefault();
@@ -389,6 +435,11 @@ function screenController(projects) {
       }
     }
   })
+
+  const taskDue = document.querySelector('#task-due');
+  taskDue.addEventListener('input', updateDateInput);
+  taskDue.addEventListener('focus', updateDateInput);
+  taskDue.addEventListener('blur', updateDateInput);
 }
 
 export {

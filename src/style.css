@@ -401,6 +401,10 @@ form button {
   gap: 4px;
 }
 
-#task-due {
+#task-due:valid {
   color: var(--primary-text);
+}
+
+.task-due-empty {
+  color: var(--form-input-placeholder);
 }
