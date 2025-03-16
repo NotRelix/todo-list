@@ -318,6 +318,18 @@ function closeCreateTask() {
   addTaskModal.classList.remove('add-task-modal-open');
 }
 
+function handleTickBoxPress(projects, projectId, taskId) {
+  const projectIndex = projectId - 1;
+  const taskIndex = taskId - 1;
+
+  if (projects[projectIndex].tasks[taskIndex].done === "true") {
+    projects[projectIndex].tasks[taskIndex].setDone("false");
+  } else {
+    projects[projectIndex].tasks[taskIndex].setDone("true");
+  }
+  populateStorage(projects);
+}
+
 // Utils
 function defaultOptionsListener(projects) {
   const sideBarBtn = document.querySelectorAll('.side-bar-btn');
@@ -425,16 +437,31 @@ function screenController(projects) {
 
     const favoriteIcon = e.target.closest('.favorite-icon')
     if (favoriteIcon) {
-      const projectId = +favoriteIcon.closest('[data-project-id]').getAttribute('data-project-id');
-      const taskId = +favoriteIcon.closest('[data-task-id]').getAttribute('data-task-id');
+      const projectId = +e.target.closest('[data-project-id]').getAttribute('data-project-id');
+      const taskId = +e.target.closest('[data-task-id]').getAttribute('data-task-id');
       const parentClass = document.querySelector('.side-bar-select').parentElement.classList.value;
-      const sideBarIndex = document.querySelector('.side-bar-select').getAttribute('data-sidebar');
+      const projectIndex = getProjectIndex();
       handleFavoritePress(projects, projectId, taskId);
 
       if (parentClass === 'task-bar-options') {
-        loadMainContentDefault(projects, sideBarIndex);
+        loadMainContentDefault(projects, projectIndex);
       } else {
-        loadMainContentCreated(projects, sideBarIndex);
+        loadMainContentCreated(projects, projectIndex);
+      }
+    }
+
+    const tickBoxIcon = e.target.closest('.tick-box');
+    if (tickBoxIcon) {
+      const projectId = +e.target.closest('[data-project-id]').getAttribute('data-project-id');
+      const taskId = +e.target.closest('[data-task-id]').getAttribute('data-task-id');
+      const parentClass = document.querySelector('.side-bar-select').parentElement.classList.value;
+      const projectIndex = getProjectIndex();
+      handleTickBoxPress(projects, projectId, taskId);
+
+      if (parentClass === 'task-bar-options') {
+        loadMainContentDefault(projects, projectIndex);
+      } else {
+        loadMainContentCreated(projects, projectIndex);
       }
     }
   })

@@ -13,6 +13,9 @@
   --favorite-hover: #eec159;
   --form-input: #eeeded;
   --form-input-placeholder: #adacac;
+  --complete-task: #00b100;
+  --complete-task-border: #008f00;
+  --complete-task-hover: #009e00;
 }
 
 * {
@@ -220,7 +223,15 @@ form button:hover {
 
 .task-done .task-info-left svg {
   stroke: white;
-  fill: rgb(0, 177, 0);
+  fill: var(--complete-task);
+}
+
+.task-done .task-info-left svg circle {
+  stroke: var(--complete-task-border);
+}
+
+.task-done .task-info-left svg:hover {
+  fill: var(--complete-task-hover);
 }
 
 .task-card:hover,
