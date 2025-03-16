@@ -116,6 +116,9 @@ function loadTaskList(tasks, taskList) {
   tasks.forEach(task => {
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
+    if (task.done === "true") {
+      taskCard.classList.add('task-done');
+    }
     taskCard.setAttribute('data-project-id', task.project_id)
     taskCard.setAttribute('data-task-id', task.task_id);
     taskList.appendChild(taskCard);

@@ -206,6 +206,23 @@ form button:hover {
   padding: 8px 12px;
 }
 
+.task-done .task-info-left h3,
+.task-done .task-info-left p,
+.task-done .separator,
+.task-done .task-info-right {
+  opacity: 0.5;
+}
+
+.task-done .task-info-left h3,
+.task-done .task-info-left p {
+  text-decoration: line-through;
+}
+
+.task-done .task-info-left svg {
+  stroke: white;
+  fill: rgb(0, 177, 0);
+}
+
 .task-card:hover,
 .add-task:hover {
   background-color: var(--task-hover);
