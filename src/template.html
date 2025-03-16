@@ -58,8 +58,42 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>      
     </div>
-    <form class="add-project-form" action="#" method="dialog">
+    <form class="add-project-form" action="#" method="dialog" autocomplete="off">
       <input type="text" name="project-name" placeholder="My New Project" required>
+      <button type="submit">Create</button>
+    </form>
+  </dialog>
+
+  <dialog class="add-task-modal">
+    <div class="modal-top">
+      <h3>Add Project</h3>
+      <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>      
+    </div>
+    <form class="add-task-form" action="#" method="dialog" autocomplete="off">
+      <div class="form-group">
+        <label for="task-title">Title</label>
+        <input type="text" name="task-title" id="task-title" placeholder="My New Task" required>
+      </div>
+      <div class="form-group">
+        <label for="task-desc">Description</label>
+        <input type="text" name="task-desc" id="task-desc" placeholder="Description" required>
+      </div>
+      <div class="form-bottom">
+        <div class="form-group">
+          <label for="task-priority">Priority</label>
+          <select name="task-priority" id="task-priority" required>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="task-due">Due Date</label>
+          <input type="date" id="task-due" required>
+        </div>
+      </div>
       <button type="submit">Create</button>
     </form>
   </dialog>

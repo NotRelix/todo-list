@@ -263,10 +263,28 @@ function handleProjectFormSubmit(projects) {
 
 function closeCreateProject() {
   const addProjectModal = document.querySelector('.add-project-modal');
+  const addProjectForm = document.querySelector('.add-project-form');
   setTimeout(() => {
     addProjectModal.close();
+    addProjectForm.reset();
   }, 200)
   addProjectModal.classList.remove('add-project-modal-open');
+}
+
+function handleCreateTask() {
+  const addTaskModal = document.querySelector('.add-task-modal');
+  addTaskModal.showModal();
+  addTaskModal.classList.add('add-task-modal-open');
+}
+
+function closeCreateTask() {
+  const addTaskModal = document.querySelector('.add-task-modal');
+  const addTaskForm = document.querySelector('.add-task-form');
+  setTimeout(() => {
+    addTaskModal.close();
+    addTaskForm.reset();
+  }, 200)
+  addTaskModal.classList.remove('add-task-modal-open');
 }
 
 // Utils
@@ -328,8 +346,6 @@ function screenController(projects) {
     newProjectAdded.classList.add('side-bar-select');
 
     loadMainContentCreated(projects, lastIndex);
-
-    e.target.reset();
   })
 
   const addProjectModal = document.querySelector('.add-project-modal');
@@ -338,13 +354,24 @@ function screenController(projects) {
     closeCreateProject();
   })
 
+  const addTaskModal = document.querySelector('.add-task-modal');
+  addTaskModal.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeCreateTask();
+  })
+
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
     }
 
+    if (e.target.closest('.add-task')) {
+      handleCreateTask();
+    }
+
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
+      closeCreateTask();
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon')

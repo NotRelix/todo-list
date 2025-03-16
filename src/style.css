@@ -303,7 +303,12 @@ form button:hover {
 }
 
 /* Modal */
-.add-project-modal {
+dialog:not([open]) {
+  display: none;
+}
+
+.add-project-modal,
+.add-task-modal {
   display: flex;
   flex-direction: column;
   border: none;
@@ -317,17 +322,20 @@ form button:hover {
   transition: all 0.2s ease-in-out;
 }
 
-.add-project-modal::backdrop {
+.add-project-modal::backdrop,
+.add-task-modal::backdrop {
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 0.2s ease-in-out;
 }
 
-.add-project-modal-open {
+.add-project-modal-open,
+.add-task-modal-open {
   opacity: 1;
   transform: scale(1);
 }
 
-.add-project-modal-open::backdrop {
+.add-project-modal-open::backdrop,
+.add-task-modal-open::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -353,7 +361,14 @@ form {
   gap: 16px;
 }
 
-form input {
+label {
+  color: var(--primary-text);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+form input,
+form select {
   padding: 8px;
   background-color: var(--form-input);
   border: none;
@@ -372,4 +387,20 @@ form button {
   border: none;
   background-color: var(--sidebar-selected);
   color: white;
+}
+
+.form-bottom {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+
+#task-due {
+  color: var(--primary-text);
 }
