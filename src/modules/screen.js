@@ -16,9 +16,25 @@ function createSidebarDiv(name, index) {
   title.textContent = name;
   newDiv.appendChild(title);
 
+  const menuContainer = document.createElement('div');
+  menuContainer.classList.add('side-bar-menu-container');
+  newDiv.appendChild(menuContainer);
+
   const svg2 = createMenuIcon();
   svg2.classList.add('side-bar-menu-btn')
-  newDiv.appendChild(svg2);
+  menuContainer.appendChild(svg2);
+
+  const menuDropDown = document.createElement('div');
+  menuDropDown.classList.add('menu-drop-down', 'hidden');
+  menuContainer.appendChild(menuDropDown);
+
+  const renameText = document.createElement('p');
+  renameText.textContent = 'Rename';
+  menuDropDown.appendChild(renameText);
+
+  const deleteText = document.createElement('p');
+  deleteText.textContent = 'Delete';
+  menuDropDown.appendChild(deleteText);
 
   return newDiv;
 }
@@ -306,11 +322,17 @@ function handleTaskFormSubmit(projects) {
   loadMainContentCreated(projects, projectIndex);
 }
 
+function resetDescTextarea() {
+  const taskDesc = document.querySelector('#task-desc');
+  taskDesc.style.height = "calc(1.2rem * 6)";
+}
+
 function closeCreateTask() {
   const addTaskModal = document.querySelector('.add-task-modal');
   const addTaskForm = document.querySelector('.add-task-form');
   const taskDue = document.querySelector('#task-due');
   setTimeout(() => {
+    resetDescTextarea();
     addTaskModal.close();
     addTaskForm.reset();
   }, 200)
@@ -358,6 +380,18 @@ function createdProjectsListener(projects) {
   })
 }
 
+function handleSideBarMenuClick(e) {
+  const menuDropDown = document.querySelectorAll('.menu-drop-down');
+  menuDropDown.forEach(btn => {
+    if (btn !== e.currentTarget.nextSibling) {
+      btn.classList.add('hidden');
+    }
+  })
+
+  const menu = e.currentTarget.nextSibling;
+  menu.classList.toggle('hidden');
+}
+
 function updateDateInput() {
   const taskDue = document.querySelector('#task-due');
   if (taskDue.value) {
@@ -378,6 +412,11 @@ function screenController(projects) {
 
   defaultOptionsListener(projects);
   createdProjectsListener(projects);
+
+  const sideBarMenuBtn = document.querySelectorAll('.side-bar-menu-btn');
+  sideBarMenuBtn.forEach(btn => {
+    btn.addEventListener('click', handleSideBarMenuClick);
+  })
 
   const addProjectForm = document.querySelector('.add-project-form');
   addProjectForm.addEventListener('submit', (e) => {
@@ -433,6 +472,13 @@ function screenController(projects) {
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
       closeCreateTask();
+    }
+
+    if (!e.target.closest('.side-bar-menu-container')) {
+      const menuDropDown = document.querySelectorAll('.menu-drop-down');
+      menuDropDown.forEach(btn => {
+        btn.classList.add('hidden');
+      })
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon')

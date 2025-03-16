@@ -59,7 +59,7 @@
       </svg>      
     </div>
     <form class="add-project-form" action="#" method="dialog" autocomplete="off">
-      <input type="text" name="project-name" placeholder="My New Project" required>
+      <input type="text" name="project-name" placeholder="My New Project" maxlength="12" required>
       <button type="submit">Create</button>
     </form>
   </dialog>
@@ -74,11 +74,11 @@
     <form class="add-task-form" action="#" method="dialog" autocomplete="off">
       <div class="form-group">
         <label for="task-title">Title</label>
-        <input type="text" name="task-title" id="task-title" placeholder="My New Task" required>
+        <input type="text" name="task-title" id="task-title" placeholder="My New Task" maxlength="24" required>
       </div>
       <div class="form-group">
         <label for="task-desc">Description</label>
-        <input type="text" name="task-desc" id="task-desc" placeholder="Description" required>
+        <textarea type="text" name="task-desc" id="task-desc" placeholder="Description" required></textarea>
       </div>
       <div class="form-bottom">
         <div class="form-group">

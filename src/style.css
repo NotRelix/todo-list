@@ -16,6 +16,8 @@
   --complete-task: #00b100;
   --complete-task-border: #008f00;
   --complete-task-hover: #009e00;
+  --menu-drop-down: #E9ECEF;
+  --menu-drop-down-hover: #dfe2e6;
 }
 
 * {
@@ -106,6 +108,35 @@ nav {
   position: relative;
   align-items: center;
   padding: 12px;
+}
+
+.side-bar-menu-container {
+  display: flex;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.menu-drop-down {
+  z-index: 10;
+  position: absolute;
+  margin-right: 8px;
+  right: 0;
+  top: 85%;
+  border-radius: 8px;
+  background-color: var(--menu-drop-down);
+  color: var(--primary-text);
+  overflow: hidden;
+}
+
+.menu-drop-down p {
+  padding: 12px;
+}
+
+.menu-drop-down p:hover {
+  background-color: var(--menu-drop-down-hover);
 }
 
 .side-bar-btn:hover,
@@ -396,19 +427,28 @@ label {
 }
 
 form input,
+form textarea,
 form select {
   padding: 8px;
   background-color: var(--form-input);
   border: none;
 }
 
-form input::placeholder {
+form input::placeholder
+form textarea::placeholder {
   color: var(--form-input-placeholder);
 }
 
 input:focus,
+textarea,
 select {
   outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: calc(1.2rem * 6);
+  max-height: calc(1.2rem * 12);
 }
 
 form button {
