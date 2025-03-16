@@ -384,7 +384,8 @@ dialog:not([open]) {
 }
 
 .add-project-modal,
-.add-task-modal {
+.add-task-modal,
+.edit-project-modal {
   display: flex;
   flex-direction: column;
   border: none;
@@ -399,19 +400,22 @@ dialog:not([open]) {
 }
 
 .add-project-modal::backdrop,
-.add-task-modal::backdrop {
+.add-task-modal::backdrop,
+.edit-project-modal::backdrop {
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 0.2s ease-in-out;
 }
 
 .add-project-modal-open,
-.add-task-modal-open {
+.add-task-modal-open,
+.edit-project-modal-open {
   opacity: 1;
   transform: scale(1);
 }
 
 .add-project-modal-open::backdrop,
-.add-task-modal-open::backdrop {
+.add-task-modal-open::backdrop,
+.edit-project-modal-open::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 

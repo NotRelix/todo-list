@@ -29,10 +29,12 @@ function createSidebarDiv(name, index) {
   menuContainer.appendChild(menuDropDown);
 
   const renameText = document.createElement('p');
+  renameText.classList.add('rename-project')
   renameText.textContent = 'Rename';
   menuDropDown.appendChild(renameText);
 
   const deleteText = document.createElement('p');
+  deleteText.classList.add('delete-project');
   deleteText.textContent = 'Delete';
   menuDropDown.appendChild(deleteText);
 
@@ -327,6 +329,22 @@ function resetDescTextarea() {
   taskDesc.style.height = "calc(1.2rem * 6)";
 }
 
+function handleEditProject() {
+  const editProjectModal = document.querySelector('.edit-project-modal');
+  editProjectModal.showModal();
+  editProjectModal.classList.add('edit-project-modal-open');
+}
+
+function closeEditProject() {
+  const editProjectModal = document.querySelector('.edit-project-modal');
+  const editProjectForm = document.querySelector('.edit-project-form');
+  setTimeout(() => {
+    editProjectModal.close();
+    editProjectForm.reset();
+  }, 200)
+  editProjectModal.classList.remove('edit-project-modal-open');
+}
+
 function closeCreateTask() {
   const addTaskModal = document.querySelector('.add-task-modal');
   const addTaskForm = document.querySelector('.add-task-form');
@@ -395,6 +413,12 @@ function handleSideBarMenuClick(e) {
 
   const menu = e.currentTarget.nextSibling;
   menu.classList.toggle('hidden');
+
+  menu.querySelectorAll('p').forEach(option => {
+    option.addEventListener('click', () => {
+      menu.classList.add('hidden');
+    })
+  })
 }
 
 function updateDateInput() {
@@ -465,6 +489,19 @@ function screenController(projects) {
     closeCreateTask();
   })
 
+  const renameProject = document.querySelectorAll('.rename-project');
+  renameProject.forEach(item => {
+    item.addEventListener('click', () => {
+      handleEditProject();
+    })
+  })
+
+  const editProjectModal = document.querySelector('.edit-project-modal');
+  editProjectModal.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeEditProject();
+  })
+
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
@@ -477,6 +514,7 @@ function screenController(projects) {
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
       closeCreateTask();
+      closeEditProject();
     }
 
     if (!e.target.closest('.side-bar-menu-container')) {

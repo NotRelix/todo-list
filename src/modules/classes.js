@@ -8,6 +8,8 @@ class Project {
   get projectName() { return this.name; }
   get tasks() { return this.#tasks.slice(); }
 
+  set projectName(newProjectName) { this.name = newProjectName; }
+
   addTask(task) {
     this.#tasks.push(task);
   }
