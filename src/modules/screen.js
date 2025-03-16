@@ -370,6 +370,11 @@ function createdProjectsListener(projects) {
   const sideBarBtn = document.querySelectorAll('.side-bar-btn');
   createdProjects.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
+      if (e.target.closest('.side-bar-menu-btn') || e.target.closest('.menu-drop-down')) {
+        e.stopPropagation();
+        return;
+      }
+
       const projectCount = createdProjects.length - 1;
       if (index < projectCount) {
         removeSelectStyle(sideBarBtn, 'side-bar-select');

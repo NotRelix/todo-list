@@ -88,6 +88,14 @@ button:focus {
   gap: 8px;
 }
 
+.logo,
+.side-bar-btn,
+.menu-drop-down p,
+.task-card,
+.add-btn {
+  user-select: none;
+}
+
 /* Navbar */
 nav {
   display: flex;
@@ -129,6 +137,7 @@ nav {
   background-color: var(--menu-drop-down);
   color: var(--primary-text);
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .menu-drop-down p {
@@ -144,6 +153,11 @@ nav {
   background-color: var(--navbar);
 }
 
+.side-bar-btn:hover:has(.menu-drop-down:hover) {
+  background-color: inherit;
+}
+
+
 .side-bar-select {
   background-color: var(--sidebar-selected);
 }
@@ -151,6 +165,9 @@ nav {
 .side-bar-select:hover,
 form button:hover {
   background-color: var(--sidebar-selected-hover);
+}
+.side-bar-select:hover:has(.menu-drop-down:hover) {
+  background-color: var(--sidebar-selected);
 }
 
 .task-bar-options,
