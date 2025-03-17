@@ -57,15 +57,40 @@ function createAddProjectBtn() {
 }
 
 function loadSidebarContent(projects) {
+  const selectedElement = document.querySelector('.side-bar-select');
+  const selectedIndex = selectedElement ? getProjectIndex() : null;
+
   const createdProjects = document.querySelector('.created-projects');
   createdProjects.innerHTML = '';
+  
   projects.forEach((project, index) => {
     const newList = createSidebarDiv(project.name, index);
-    createdProjects.appendChild(newList)
-  })
+    createdProjects.appendChild(newList);
+  });
+
   const addProjectBtn = createAddProjectBtn();
   createdProjects.appendChild(addProjectBtn);
 
+  
+  if (selectedIndex !== null) {
+    const newSelectedElement = document.querySelector(`[data-sidebar="${selectedIndex}"]`);
+    if (newSelectedElement) {
+      newSelectedElement.classList.add('side-bar-select');
+    }
+  }
+  
+  const updatedSelectedElement = document.querySelector('.side-bar-select');
+  if (!updatedSelectedElement) return;
+  
+  const parentClass = updatedSelectedElement.parentElement.classList.value;
+  const projectIndex = getProjectIndex();
+  
+  if (parentClass.includes('task-bar-options')) {
+    loadMainContentDefault(projects, projectIndex);
+  } else {
+    loadMainContentCreated(projects, projectIndex);
+  }
+  
   bindEditProjectFormListener(projects);
   createdProjectsListener(projects);
   defaultOptionsListener(projects);
@@ -346,9 +371,17 @@ function handleEditProjectSubmit(e, projects) {
   const index = e.target.closest('[data-sidebar]').getAttribute('data-sidebar');
   projects[index].projectName = title.value;
 
-  loadSidebarContent(projects);
-  bindEditProjectFormListener(projects);
-  defaultOptionsListener(projects);
+  const selectedElement = document.querySelector('.side-bar-select');
+  if (selectedElement) {
+    const parentClass = selectedElement.parentElement.classList.value;
+    const projectIndex = getProjectIndex();
+    if (parentClass === 'task-bar-options') {
+      loadMainContentDefault(projects, projectIndex);
+    } else {
+      loadMainContentCreated(projects, projectIndex);
+    }
+  }
+
   populateStorage(projects);
 }
 
@@ -405,6 +438,8 @@ function defaultOptionsListener(projects) {
 
 function createdProjectsListener(projects) {
   const createdProjectsContainer = document.querySelector('.created-projects');
+  if (!createdProjectsContainer) return;
+
   const sideBarBtns = document.querySelectorAll('.side-bar-btn');
 
   createdProjectsContainer.addEventListener('click', (e) => {
@@ -438,18 +473,6 @@ function bindEditProjectFormListener(projects) {
 
     closeEditProject();
   });
-}
-
-function handleSideBarMenuClick(e) {
-  const menuDropDown = document.querySelectorAll('.menu-drop-down');
-  menuDropDown.forEach(btn => {
-    if (btn !== e.currentTarget.nextElementSibling) {
-      btn.classList.add('hidden');
-    }
-  })
-
-  const menu = e.currentTarget.nextElementSibling;
-  menu.classList.toggle('hidden');
 }
 
 function updateDateInput() {
@@ -541,7 +564,6 @@ function screenController(projects) {
 
   document.addEventListener('click', (e) => {
     const renameBtn = e.target.closest('.rename-project');
-    console.log(renameBtn)
     if (renameBtn) {
       handleEditProject(e);
     }
@@ -553,8 +575,6 @@ function screenController(projects) {
     closeEditProject();
   });
 
-  bindEditProjectFormListener(projects);
-
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
@@ -563,8 +583,6 @@ function screenController(projects) {
     if (e.target.closest('.add-task')) {
       handleCreateTask();
     }
-
-    console.log(e.target)
 
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
