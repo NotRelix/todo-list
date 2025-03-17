@@ -118,7 +118,8 @@ nav {
   padding: 12px;
 }
 
-.side-bar-menu-container {
+.side-bar-menu-container,
+.task-menu-container {
   display: flex;
   align-items: center;
 }
@@ -128,8 +129,8 @@ nav {
 }
 
 .menu-drop-down {
-  z-index: 10;
   position: absolute;
+  z-index: 100;
   margin-right: 8px;
   right: 0;
   top: 85%;
@@ -138,6 +139,10 @@ nav {
   color: var(--primary-text);
   overflow: hidden;
   pointer-events: auto;
+}
+
+.task-info-right .menu-drop-down {
+  opacity: 1;
 }
 
 .menu-drop-down p {
@@ -182,7 +187,8 @@ form button:hover {
   font-weight: 400;
 }
 
-.side-bar-menu-btn {
+.side-bar-menu-btn,
+.task-menu-btn {
   position: absolute;
   margin-right: 8px;
   right: 0;
@@ -239,6 +245,11 @@ form button:hover {
   background-color: var(--sidebar-selected);
 }
 
+.task-done {
+  position: relative;
+  z-index: auto;
+}
+
 .task-list {
   display: flex;
   flex-direction: column;
@@ -248,18 +259,21 @@ form button:hover {
 
 /* Task Card */
 .task-card {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   background-color: var(--sidebar);
   padding: 8px 12px;
+  padding-right: 24px;
 }
 
 .task-done .task-info-left h3,
 .task-done .task-info-left p,
 .task-done .separator,
-.task-done .task-info-right {
+.task-done .task-info-right .due-date,
+.task-done .task-info-right .favorite {
   opacity: 0.5;
 }
 

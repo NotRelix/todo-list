@@ -149,6 +149,7 @@ function createTaskInfoRight(task) {
   taskInfoRight.classList.add('task-info-right');
 
   const dueDate = document.createElement('p');
+  dueDate.classList.add('due-date');
   dueDate.textContent = formatDateShort(task.dueDate);
   taskInfoRight.appendChild(dueDate);
 
@@ -158,8 +159,27 @@ function createTaskInfoRight(task) {
   }
   taskInfoRight.appendChild(favoriteIcon);
 
+  const menuContainer = document.createElement('div');
+  menuContainer.classList.add('task-menu-container');
+  taskInfoRight.appendChild(menuContainer);
+
   const menuIcon = createMenuIcon();
-  taskInfoRight.appendChild(menuIcon);
+  menuIcon.classList.add('task-menu-btn');
+  menuContainer.appendChild(menuIcon);
+
+  const menuDropDown = document.createElement('div');
+  menuDropDown.classList.add('menu-drop-down', 'hidden');
+  menuContainer.appendChild(menuDropDown);
+
+  const editText = document.createElement('p');
+  editText.classList.add('edit-task')
+  editText.textContent = 'Edit';
+  menuDropDown.appendChild(editText);
+
+  const deleteText = document.createElement('p');
+  deleteText.classList.add('delete-task');
+  deleteText.textContent = 'Delete';
+  menuDropDown.appendChild(deleteText);
 
   return taskInfoRight;
 }
@@ -413,8 +433,6 @@ function closeCreateTask() {
   addTaskModal.classList.remove('add-task-modal-open');
 }
 
-
-
 function handleTickBoxPress(projects, projectId, taskId) {
   const projectIndex = projectId - 1;
   const taskIndex = taskId - 1;
@@ -497,7 +515,9 @@ function getNewProjectAdded() {
 }
 
 document.addEventListener('click', (e) => {
-  const menuBtn = e.target.closest('.side-bar-menu-btn');
+  const menuBtn = e.target.closest('.menu-icon');
+  const taskMenu = e.target.closest('.task-menu-btn');
+  console.log(taskMenu);
   if (menuBtn) {
     const allMenus = document.querySelectorAll('.menu-drop-down');
     allMenus.forEach(menu => {
