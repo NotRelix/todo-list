@@ -384,8 +384,14 @@ function resetDescTextarea() {
 }
 
 function handleEditProject(e) {
-  const sideBarIndex = e.target.closest('[data-sidebar').getAttribute('data-sidebar');
+  const sideBarIndex = e.target.closest('[data-sidebar]').getAttribute('data-sidebar');
   const editProjectModal = document.querySelector('.edit-project-modal');
+  const projectInput = editProjectModal.querySelector('[name="edit-project-name"]');
+
+  const sideBarElement = e.target.closest('[data-sidebar]');
+  const title = sideBarElement.querySelector('h3').textContent;
+  projectInput.value = title;
+
   editProjectModal.showModal();
   editProjectModal.classList.add('edit-project-modal-open');
   editProjectModal.setAttribute('data-sidebar', sideBarIndex);
@@ -517,7 +523,6 @@ function getNewProjectAdded() {
 document.addEventListener('click', (e) => {
   const menuBtn = e.target.closest('.menu-icon');
   const taskMenu = e.target.closest('.task-menu-btn');
-  console.log(taskMenu);
   if (menuBtn) {
     const allMenus = document.querySelectorAll('.menu-drop-down');
     allMenus.forEach(menu => {
