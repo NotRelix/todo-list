@@ -1,4 +1,5 @@
 import { addProject, addTask } from "./create.js";
+import { deleteProject } from "./delete.js";
 import { formatDateLong, formatDateShort } from "./formatDate.js";
 import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
@@ -37,7 +38,7 @@ function createSidebarDiv(name, index) {
   deleteText.classList.add('delete-project');
   deleteText.textContent = 'Delete';
   menuDropDown.appendChild(deleteText);
-  
+
   renameText.addEventListener('click', (e) => {
     handleEditProject(e);
   })
@@ -63,19 +64,19 @@ function createAddProjectBtn() {
 function loadSidebarContent(projects) {
   const selectedElement = document.querySelector('.side-bar-select');
   const selectedIndex = selectedElement ? getProjectIndex() : null;
-  
+
   const createdProjects = document.querySelector('.created-projects');
   createdProjects.innerHTML = '';
-  
+
   projects.forEach((project, index) => {
     const newList = createSidebarDiv(project.name, index);
     createdProjects.appendChild(newList);
   });
-  
+
   const addProjectBtn = createAddProjectBtn();
   createdProjects.appendChild(addProjectBtn);
-  
-  const updatedSelectedElement = document.querySelector('.side-bar-select') === null ? 'created-projects': 'task-bar-options';
+
+  const updatedSelectedElement = document.querySelector('.side-bar-select') === null ? 'created-projects' : 'task-bar-options';
   if (selectedIndex !== null) {
     const newSelectedElement = document.querySelector(`[data-sidebar="${selectedIndex}"]`);
     if (updatedSelectedElement === 'created-projects') {
@@ -84,17 +85,17 @@ function loadSidebarContent(projects) {
       newSelectedElement.classList.add('side-bar-select');
     }
   }
-  
+
   if (!updatedSelectedElement) return;
-  
+
   const projectIndex = getProjectIndex();
-  
+
   if (updatedSelectedElement === 'task-bar-options') {
     loadMainContentDefault(projects, projectIndex);
   } else {
     loadMainContentCreated(projects, projectIndex);
   }
-  
+
   bindEditProjectFormListener(projects);
   createdProjectsListener(projects);
   defaultOptionsListener(projects);
@@ -412,6 +413,8 @@ function closeCreateTask() {
   addTaskModal.classList.remove('add-task-modal-open');
 }
 
+
+
 function handleTickBoxPress(projects, projectId, taskId) {
   const projectIndex = projectId - 1;
   const taskIndex = taskId - 1;
@@ -476,7 +479,7 @@ function bindEditProjectFormListener(projects) {
     loadSidebarContent(projects);
 
     closeEditProject();
-  }, {once: true});
+  }, { once: true });
 }
 
 function updateDateInput() {
@@ -568,6 +571,26 @@ function screenController(projects) {
     e.preventDefault();
     closeEditProject();
   });
+
+  document.querySelector('.created-projects').addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete-project')) {
+      const projectIndex = e.target.closest('.side-bar-btn').getAttribute('data-sidebar');
+      const selectedProject = document.querySelector('.side-bar-select');
+      const parentElement = selectedProject.parentElement.classList.value
+      const selectedProjectSideBar = selectedProject.getAttribute('data-sidebar');
+      if (confirm('are you sure you want to delete this project?')) {
+        deleteProject(projects, projectIndex);
+        if (parentElement === 'created-projects' && selectedProjectSideBar === projectIndex) {
+          const sideBarBtns = document.querySelectorAll('.side-bar-btn');
+          const allTasks = document.querySelector('.task-bar-options').children[0];
+          removeSelectStyle(sideBarBtns, 'side-bar-select');
+          allTasks.classList.add('side-bar-select');
+        }
+        loadSidebarContent(projects);
+        populateStorage(projects);
+      }
+    }
+  })
 
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
