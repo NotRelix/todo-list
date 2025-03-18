@@ -1,5 +1,5 @@
 import { addProject, addTask } from "./create.js";
-import { deleteProject } from "./delete.js";
+import { deleteProject, deleteTask } from "./delete.js";
 import { formatDateLong, formatDateShort } from "./formatDate.js";
 import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
@@ -200,6 +200,11 @@ function loadTaskList(tasks, taskList) {
 
     const rightSection = createTaskInfoRight(task);
     taskCard.appendChild(rightSection);
+
+    taskCard.addEventListener('click', () => {
+      document.querySelectorAll('.task-card').forEach(card => card.style.zIndex = '1');
+      taskCard.style.zIndex = '1000';
+    })
   })
 }
 
@@ -451,6 +456,29 @@ function handleTickBoxPress(projects, projectId, taskId) {
   populateStorage(projects);
 }
 
+function handleDeleteTask(e, projects) {
+  const taskCard = e.target.closest('.task-card');
+  const projectIndex = taskCard.getAttribute('data-project-id') - 1;
+  const taskId = taskCard.getAttribute('data-task-id');
+  const parentClass = document.querySelector('.side-bar-select').parentElement.classList.value;
+  const selectedProjectIndex = document.querySelector('.side-bar-select').getAttribute('data-sidebar');
+  if (confirm("are you sure you want to delete this task?")) {
+    let indexInTasks;
+    projects[projectIndex].tasks.forEach((task, index) => {
+      if (task.task_id === taskId) {
+        indexInTasks = index;
+      }
+    })
+    deleteTask(projects[projectIndex], indexInTasks);
+    if (parentClass === 'task-bar-options') {
+      loadMainContentDefault(projects, selectedProjectIndex);
+    } else {
+      loadMainContentCreated(projects, selectedProjectIndex);
+    }
+    console.log(projects[projectIndex])
+  }
+}
+
 // Utils
 function defaultOptionsListener(projects) {
   const taskBarOptions = document.querySelector('.task-bar-options');
@@ -523,6 +551,7 @@ function getNewProjectAdded() {
 document.addEventListener('click', (e) => {
   const menuBtn = e.target.closest('.menu-icon');
   const taskMenu = e.target.closest('.task-menu-btn');
+  
   if (menuBtn) {
     const allMenus = document.querySelectorAll('.menu-drop-down');
     allMenus.forEach(menu => {
@@ -616,20 +645,24 @@ function screenController(projects) {
       }
     }
   })
-
+  
   document.addEventListener('click', (e) => {
     if (e.target.closest('.add-project')) {
       handleCreateProject();
     }
-
+    
     if (e.target.closest('.add-task')) {
       handleCreateTask();
     }
-
+    
     if (e.target.closest('.close-icon')) {
       closeCreateProject();
       closeCreateTask();
       closeEditProject();
+    }
+    
+    if (e.target.closest('.delete-task')) {
+      handleDeleteTask(e, projects);
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon');

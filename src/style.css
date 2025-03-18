@@ -130,7 +130,7 @@ nav {
 
 .menu-drop-down {
   position: absolute;
-  z-index: 100;
+  z-index: 9999;
   margin-right: 8px;
   right: 0;
   top: 85%;
@@ -138,10 +138,10 @@ nav {
   background-color: var(--menu-drop-down);
   color: var(--primary-text);
   overflow: hidden;
-  pointer-events: auto;
+  pointer-events: auto; 
 }
 
-.task-info-right .menu-drop-down {
+.menu-drop-down {
   opacity: 1;
 }
 
@@ -251,6 +251,8 @@ form button:hover {
 }
 
 .task-list {
+  position: relative;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -267,12 +269,18 @@ form button:hover {
   background-color: var(--sidebar);
   padding: 8px 12px;
   padding-right: 24px;
+  overflow: visible;
+}
+
+.task-card.menu-open {
+  z-index: 9999;
 }
 
 .task-done .task-info-left h3,
 .task-done .task-info-left p,
 .task-done .separator,
 .task-done .task-info-right .due-date,
+.task-done .task-info-right .favorite-icon,
 .task-done .task-info-right .favorite {
   opacity: 0.5;
 }
@@ -344,6 +352,11 @@ form button:hover {
   flex-shrink: 0;
   display: flex;
   gap: 12px;
+}
+
+.menu-drop-down .edit-task,
+.menu-drop-down .delete-task {
+  padding: 12px;
 }
 
 .task-info-right p {
