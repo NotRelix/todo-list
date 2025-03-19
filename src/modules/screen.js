@@ -107,10 +107,6 @@ function removeSelectStyle(nodeList, className) {
   })
 }
 
-function getCreatedProjects() {
-  return Array.from(document.querySelector('.created-projects').children);
-}
-
 // #region Main Content
 function clearTaskList() {
   const taskList = document.querySelector('.task-list');
@@ -657,7 +653,6 @@ function getNewProjectAdded() {
 
 document.addEventListener('click', (e) => {
   const menuBtn = e.target.closest('.menu-icon');
-  const taskMenu = e.target.closest('.task-menu-btn');
 
   if (menuBtn) {
     const allMenus = document.querySelectorAll('.menu-drop-down');

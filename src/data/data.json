@@ -1,13 +1,13 @@
 {
-  "Daily Routine": {
+  "Daily Tasks": {
     "project_id": "1",
     "tasks": [
       {
         "project_id": "1",
         "task_id": "1",
         "title": "shower",
-        "desc": "first description on first task",
-        "dueDate": "Sun Mar 09 2025 08:00:00 GMT+0800 (China Standard Time)",
+        "desc": "Gotta stay fresh and hygienic every single day. I don't wanna be sick.",
+        "dueDate": "Fri Feb 14 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "high",
         "done": "true",
         "important": "true"
@@ -16,7 +16,7 @@
         "project_id": "1",
         "task_id": "2",
         "title": "make todo list",
-        "desc": "second description on first task",
+        "desc": "I need to keep track on what I'm doing, so I need a really well polished todo list with really clean ui, and of course, it has to be functional.",
         "dueDate": "Mon Mar 10 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "medium",
         "done": "false",
@@ -26,8 +26,8 @@
         "project_id": "1",
         "task_id": "3",
         "title": "sleep",
-        "desc": "third description on first task",
-        "dueDate": "Thu Mar 20 2025 08:00:00 GMT+0800 (China Standard Time)",
+        "desc": "Studies have shown that it's best to have 8 hours of sleep everyday, but me, I get 4 on a lucky day.",
+        "dueDate": "Tue Mar 25 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "high",
         "done": "false",
         "important": "false"
@@ -41,7 +41,7 @@
         "project_id": "2",
         "task_id": "1",
         "title": "data analytics",
-        "desc": "first description on second task",
+        "desc": "Analyze some data in Python using visual plots.",
         "dueDate": "Mon Mar 10 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "high",
         "done": "true",
@@ -51,8 +51,8 @@
         "project_id": "2",
         "task_id": "2",
         "title": "thesis",
-        "desc": "second description on second task",
-        "dueDate": "Tue Mar 11 2025 08:00:00 GMT+0800 (China Standard Time)",
+        "desc": "In order to graduate, we must finish our thesis and defend it in front of some professors, that sucks.",
+        "dueDate": "Wed Aug 13 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "medium",
         "done": "false",
         "important": "false"
@@ -61,7 +61,7 @@
         "project_id": "2",
         "task_id": "3",
         "title": "study for automata test",
-        "desc": "third description on second task",
+        "desc": "Very boring subject, but at least there are drawings for me to visualize.",
         "dueDate": "Sun Mar 09 2025 08:00:00 GMT+0800 (China Standard Time)",
         "priority": "low",
         "done": "true",
@@ -71,9 +71,9 @@
         "project_id": "2",
         "task_id": "4",
         "title": "do research paper",
-        "desc": "fourth description on second task",
-        "dueDate": "Fri Mar 14 2025 08:00:00 GMT+0800 (China Standard Time)",
-        "priority": "low",
+        "desc": "In order to graduate pt.2 we need to finish our research paper on time, or else we won't be able to graduate.",
+        "dueDate": "Tue May 06 2025 08:00:00 GMT+0800 (China Standard Time)",
+        "priority": "medium",
         "done": "false",
         "important": "true"
       }
