@@ -12,8 +12,13 @@ function formatDateLong(date) {
   return format(date, "MMMM dd, yyyy");
 }
 
+function formatEditTaskDate(date) {
+  return format(date, "yyyy-MM-dd");
+}
+
 export {
   formatDateVeryShort,
   formatDateShort,
   formatDateLong,
+  formatEditTaskDate
 }

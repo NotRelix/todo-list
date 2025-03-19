@@ -110,5 +110,39 @@
       <button type="submit">Create</button>
     </form>
   </dialog>
+
+  <dialog class="edit-task-modal">
+    <div class="modal-top">
+      <h3>Edit Task</h3>
+      <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>      
+    </div>
+    <form class="edit-task-form" action="#" method="dialog" autocomplete="off">
+      <div class="form-group">
+        <label for="edit-task-title">Title</label>
+        <input type="text" name="edit-task-title" id="edit-task-title" placeholder="My New Task" maxlength="24" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-task-desc">Description</label>
+        <textarea type="text" name="edit-task-desc" id="edit-task-desc" placeholder="Description" required></textarea>
+      </div>
+      <div class="form-bottom">
+        <div class="form-group">
+          <label for="edit-task-priority">Priority</label>
+          <select name="edit-task-priority" id="edit-task-priority" required>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-task-due">Due Date</label>
+          <input type="date" name="edit-task-due" id="edit-task-due" class="task-due-empty" required>
+        </div>
+      </div>
+      <button type="submit">Edit</button>
+    </form>
+  </dialog>
 </body>
 </html>

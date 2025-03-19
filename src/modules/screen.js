@@ -1,10 +1,10 @@
 import { addProject, addTask } from "./create.js";
 import { deleteProject, deleteTask } from "./delete.js";
-import { formatDateLong, formatDateShort } from "./formatDate.js";
+import { formatDateLong, formatDateShort, formatEditTaskDate } from "./formatDate.js";
 import { populateStorage } from "./populate.js";
 import { createHamburgerIcon, createAddIcon, createTickBoxIcon, createFavoriteIcon, createMenuIcon } from "./svg.js";
 
-// Sidebar
+// #region Sidebar
 function createSidebarDiv(name, index) {
   const newDiv = document.createElement('div');
   newDiv.classList.add('side-bar-btn');
@@ -111,7 +111,7 @@ function getCreatedProjects() {
   return Array.from(document.querySelector('.created-projects').children);
 }
 
-// Main Content
+// #region Main Content
 function clearTaskList() {
   const taskList = document.querySelector('.task-list');
   taskList.innerHTML = '';
@@ -334,7 +334,7 @@ function handleFavoritePress(projects, projectId, taskId) {
   populateStorage(projects);
 }
 
-// Modals
+// #region Modals
 function handleCreateProject() {
   const addProjectModal = document.querySelector('.add-project-modal');
   addProjectModal.showModal();
@@ -456,6 +456,35 @@ function handleTickBoxPress(projects, projectId, taskId) {
   populateStorage(projects);
 }
 
+function handleEditTask(e, projects) {
+  const parentElement = e.target.closest('.task-card');
+  const projectIndex = parentElement.getAttribute('data-project-id') - 1;
+  const taskId = parentElement.getAttribute('data-task-id');
+
+  let indexInTasks;
+  projects[projectIndex].tasks.forEach((task, index) => {
+    if (task.task_id === taskId) {
+      indexInTasks = index;
+    }
+  })
+
+  const currentTask = projects[projectIndex].tasks[indexInTasks];
+  const title = document.querySelector('#edit-task-title');
+  const desc = document.querySelector('#edit-task-desc');
+  const priority = document.querySelector('#edit-task-priority');
+  const dueDate = document.querySelector('#edit-task-due');
+
+  title.value = currentTask.title;
+  desc.value = currentTask.desc;
+  priority.value = currentTask.priority;
+  dueDate.value = formatEditTaskDate(currentTask.dueDate)
+  
+  const editTaskModal = document.querySelector('.edit-task-modal');
+  editTaskModal.showModal();  
+  editTaskModal.classList.add('edit-task-modal-open'); 
+
+}
+
 function handleDeleteTask(e, projects) {
   const taskCard = e.target.closest('.task-card');
   const projectIndex = taskCard.getAttribute('data-project-id') - 1;
@@ -479,7 +508,7 @@ function handleDeleteTask(e, projects) {
   }
 }
 
-// Utils
+// #region Utils
 function defaultOptionsListener(projects) {
   const taskBarOptions = document.querySelector('.task-bar-options');
   taskBarOptions.addEventListener('click', (e) => {
@@ -580,6 +609,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// #region Screen Controller 
 function screenController(projects) {
   loadSidebarContent(projects);
   loadMainContentDefault(projects, 0);
@@ -659,6 +689,10 @@ function screenController(projects) {
       closeCreateProject();
       closeCreateTask();
       closeEditProject();
+    }
+
+    if (e.target.closest('.edit-task')) {
+      handleEditTask(e, projects);
     }
     
     if (e.target.closest('.delete-task')) {
