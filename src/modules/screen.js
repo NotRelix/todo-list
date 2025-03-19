@@ -187,6 +187,14 @@ function loadTaskList(tasks, taskList) {
     if (task.done === "true") {
       taskCard.classList.add('task-done');
     }
+
+    if (task.priority === 'low') {
+      taskCard.classList.add('low-priority');
+    } else if (task.priority === 'medium') {
+      taskCard.classList.add('med-priority');
+    } else {
+      taskCard.classList.add('high-priority');
+    }
     taskCard.setAttribute('data-project-id', task.project_id)
     taskCard.setAttribute('data-task-id', task.task_id);
     taskList.appendChild(taskCard);

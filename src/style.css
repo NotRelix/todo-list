@@ -18,6 +18,9 @@
   --complete-task-hover: #009e00;
   --menu-drop-down: #E9ECEF;
   --menu-drop-down-hover: #dfe2e6;
+  --low-priority-border: #1cb81c;
+  --med-priority-border: #fdda10;
+  --high-priority-border: #f01c1c;
 }
 
 * {
@@ -540,4 +543,16 @@ form button {
 
 .task-due-empty {
   color: var(--form-input-placeholder);
+}
+
+.low-priority {
+  border-left: 4px solid var(--low-priority-border);
+}
+
+.med-priority {
+  border-left: 4px solid var(--med-priority-border);
+}
+
+.high-priority {
+  border-left: 4px solid var(--high-priority-border);
 }
