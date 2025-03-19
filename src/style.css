@@ -416,7 +416,8 @@ dialog:not([open]) {
 .add-project-modal,
 .add-task-modal,
 .edit-task-modal,
-.edit-project-modal {
+.edit-project-modal,
+.view-task-modal {
   display: flex;
   flex-direction: column;
   border: none;
@@ -430,10 +431,15 @@ dialog:not([open]) {
   transition: all 0.2s ease-in-out;
 }
 
+.view-task-modal {
+  padding-bottom: 24px;
+}
+
 .add-project-modal::backdrop,
 .add-task-modal::backdrop,
 .edit-task-modal::backdrop,
-.edit-project-modal::backdrop {
+.edit-project-modal::backdrop,
+.view-task-modal::backdrop {
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 0.2s ease-in-out;
 }
@@ -441,7 +447,8 @@ dialog:not([open]) {
 .add-project-modal-open,
 .add-task-modal-open,
 .edit-task-modal-open,
-.edit-project-modal-open {
+.edit-project-modal-open,
+.view-task-modal-open {
   opacity: 1;
   transform: scale(1);
 }
@@ -449,7 +456,8 @@ dialog:not([open]) {
 .add-project-modal-open::backdrop,
 .add-task-modal-open::backdrop,
 .edit-task-modal-open::backdrop,
-.edit-project-modal-open::backdrop {
+.edit-project-modal-open::backdrop,
+.view-task-modal-open::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -496,7 +504,8 @@ form textarea::placeholder {
 
 input:focus,
 textarea,
-select {
+select,
+dialog {
   outline: none;
 }
 

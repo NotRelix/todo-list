@@ -243,6 +243,9 @@ function loadAllTasks(projects, taskList) {
       tasks.push(task);
     })
   })
+  if (tasks.length === 0) {
+    displayNoTasks();
+  }
   sortTasks(tasks);
   loadTaskList(tasks, taskList)
 }
@@ -275,6 +278,9 @@ function loadThisWeek(projects, taskList) {
       }
     })
   })
+  if (tasks.length === 0) {
+    displayNoTasks();
+  }
   sortTasks(tasks);
   loadTaskList(tasks, taskList);
 }
@@ -288,6 +294,9 @@ function loadImportant(projects, taskList) {
       }
     })
   })
+  if (tasks.length === 0) {
+    displayNoTasks();
+  }
   sortTasks(tasks);
   loadTaskList(tasks, taskList);
 }
@@ -476,6 +485,14 @@ function closeCreateTask() {
   addTaskModal.classList.remove('add-task-modal-open');
 }
 
+function closeViewTask() {
+  const viewTaskModal = document.querySelector('.view-task-modal');
+  setTimeout(() => {
+    viewTaskModal.close();
+  }, 200)
+  viewTaskModal.classList.remove('view-task-modal-open');
+}
+
 function handleTickBoxPress(projects, projectId, taskId) {
   const projectIndex = projectId - 1;
   const taskIndex = taskId - 1;
@@ -516,6 +533,34 @@ function handleEditTask(e, projects) {
   editTaskModal.classList.add('edit-task-modal-open');
   editTaskModal.setAttribute('data-project-id', projectIndex + 1);
   editTaskModal.setAttribute('data-task-id', taskId);
+}
+
+function handleViewTask(e, projects) {
+  const parentElement = e.target.closest('.task-card');
+  const projectIndex = parentElement.getAttribute('data-project-id') - 1;
+  const taskId = parentElement.getAttribute('data-task-id');
+  
+  let indexInTasks;
+  projects[projectIndex].tasks.forEach((task, index) => {
+    if (task.task_id === taskId) {
+      indexInTasks = index;
+    }
+  })
+  
+  const currentTask = projects[projectIndex].tasks[indexInTasks];
+  const title = document.querySelector('#view-task-title');
+  const desc = document.querySelector('#view-task-desc');
+  const priority = document.querySelector('#view-task-priority');
+  const dueDate = document.querySelector('#view-task-due');
+  
+  title.value = currentTask.title;
+  desc.value = currentTask.desc;
+  priority.value = currentTask.priority;
+  dueDate.value = formatEditTaskDate(currentTask.dueDate);
+
+  const viewTaskModal = document.querySelector('.view-task-modal');
+  viewTaskModal.showModal();
+  viewTaskModal.classList.add('view-task-modal-open');
 }
 
 function handleDeleteTask(e, projects) {
@@ -712,6 +757,12 @@ function screenController(projects) {
     }
   });
 
+  const viewTaskModal = document.querySelector('.view-task-modal');
+  viewTaskModal.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeViewTask();
+  })
+
   document.querySelector('.created-projects').addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-project')) {
       const projectIndex = e.target.closest('.side-bar-btn').getAttribute('data-sidebar');
@@ -746,6 +797,7 @@ function screenController(projects) {
       closeCreateTask();
       closeEditProject();
       closeEditTask();
+      closeViewTask();
     }
 
     if (e.target.closest('.edit-task')) {
@@ -754,6 +806,16 @@ function screenController(projects) {
 
     if (e.target.closest('.delete-task')) {
       handleDeleteTask(e, projects);
+    }
+
+    if (
+      e.target.closest('.task-card') &&
+      !e.target.closest('.favorite-icon') &&
+      !e.target.closest('.tick-box') &&
+      !e.target.closest('.task-menu-btn') &&
+      !e.target.closest('.menu-drop-down')
+    ) {
+      handleViewTask(e, projects);
     }
 
     const favoriteIcon = e.target.closest('.favorite-icon');

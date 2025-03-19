@@ -144,5 +144,38 @@
       <button type="submit">Edit</button>
     </form>
   </dialog>
+
+  <dialog class="view-task-modal">
+    <div class="modal-top">
+      <h3>Task Details</h3>
+      <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>      
+    </div>
+    <form class="view-task-form" action="#" method="dialog" autocomplete="off">
+      <div class="form-group">
+        <label for="view-task-form">Title</label>
+        <input type="text" name="view-task-title" id="view-task-title" placeholder="My New Task" maxlength="24" disabled>
+      </div>
+      <div class="form-group">
+        <label for="view-task-desc">Description</label>
+        <textarea type="text" name="view-task-desc" id="view-task-desc" placeholder="Description" disabled></textarea>
+      </div>
+      <div class="form-bottom">
+        <div class="form-group">
+          <label for="view-task-priority">Priority</label>
+          <select name="view-task-priority" id="view-task-priority" disabled>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="view-task-due">Due Date</label>
+          <input type="date" name="view-task-due" id="view-task-due" class="task-due-empty" disabled>
+        </div>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
