@@ -431,6 +431,18 @@ function closeEditProject() {
   editProjectModal.classList.remove('edit-project-modal-open');
 }
 
+function handleEditTaskSubmit(e, projects) {
+
+}
+
+function closeEditTask() {
+  const editTaskModal = document.querySelector('.edit-task-modal');
+  setTimeout(() => {
+    editTaskModal.close();
+  }, 200)
+  editTaskModal.classList.remove('edit-task-modal-open');
+}
+
 function closeCreateTask() {
   const addTaskModal = document.querySelector('.add-task-modal');
   const addTaskForm = document.querySelector('.add-task-form');
@@ -656,6 +668,12 @@ function screenController(projects) {
     closeEditProject();
   });
 
+  const editTaskModal = document.querySelector('.edit-task-modal');
+  editTaskModal.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeEditTask();
+  });
+
   document.querySelector('.created-projects').addEventListener('click', (e) => {
     if (e.target.classList.contains('delete-project')) {
       const projectIndex = e.target.closest('.side-bar-btn').getAttribute('data-sidebar');
@@ -689,6 +707,7 @@ function screenController(projects) {
       closeCreateProject();
       closeCreateTask();
       closeEditProject();
+      closeEditTask();
     }
 
     if (e.target.closest('.edit-task')) {
