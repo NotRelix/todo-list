@@ -9,14 +9,10 @@ localStorage.clear();
 
 // Use my data template or use their modified todo list
 if (localStorage.getItem('todoData') === null) {
-  console.log('from json');
   populateFromJson(projects);
   populateStorage(projects);
 } else {
-  console.log('from storage');
   populateFromStorage(projects);
 }
 
 screenController(projects);
-
-console.log(projects);
